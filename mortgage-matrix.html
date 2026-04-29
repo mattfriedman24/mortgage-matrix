@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mortgage Payment Matrix</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1a3260;
+    --blue: #1d5fc8;
+    --blue-light: #ddeafc;
+    --blue-mid: #b3ccf7;
+    --green-bg: #e8f5e2;
+    --green-text: #2d6a1a;
+    --green-light-bg: #f2faee;
+    --green-light-text: #3a7a22;
+    --red-bg: #fce9e9;
+    --red-text: #b02020;
+    --red-light-bg: #fef4f4;
+    --red-light-text: #c03030;
+    --gold: #c8973a;
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --text: #0f1f3d;
+    --muted: #6b7280;
+    --radius: 10px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 2rem 2.5rem 1.75rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 0.35rem;
+  }
+
+  .header-left p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .rate-badge {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    text-align: right;
+  }
+
+  .rate-badge .label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+
+  .rate-badge .value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .rate-badge .sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
+
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .inputs-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+
+  .inp-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .inp-group label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .inp-group input,
+  .inp-group select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.6rem 0.85rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .inp-group input:focus,
+  .inp-group select:focus {
+    border-color: var(--blue);
+  }
+
+  .calc-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 0.65rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+
+  .calc-btn:hover { background: var(--navy-mid); }
+  .calc-btn:active { transform: scale(0.97); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .stat-value span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .stat.highlight .stat-value { color: var(--blue); }
+
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .table-scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    table-layout: fixed;
+    min-width: 500px;
+  }
+
+  thead th {
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+    border-bottom: none;
+  }
+
+  thead th.row-header {
+    text-align: left;
+    padding-left: 1rem;
+    width: 110px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  thead th.center-col {
+    color: var(--gold);
+  }
+
+  tbody td {
+    padding: 0.75rem 0.6rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody td.row-header {
+    text-align: left;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: #faf9f7;
+    border-right: 1px solid var(--border);
+  }
+
+  td.center-cell {
+    background: var(--blue-light);
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  td.low-cell { background: var(--green-bg); color: var(--green-text); font-weight: 500; }
+  td.near-low { background: var(--green-light-bg); color: var(--green-light-text); }
+  td.high-cell { background: var(--red-bg); color: var(--red-text); font-weight: 500; }
+  td.near-high { background: var(--red-light-bg); color: var(--red-light-text); }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .disclaimer {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 1.5rem; }
+    .header-left h1 { font-size: 1.5rem; }
+    main { padding: 1.25rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Mortgage Payment Matrix</h1>
+    <p>See how price &amp; rate changes affect your monthly payment — all at once</p>
+  </div>
+  <div class="rate-badge">
+    <div class="label">Rocket Mortgage base rate</div>
+    <div class="value">6.625%</div>
+    <div class="sub">30-yr fixed · Apr 2026</div>
+  </div>
+</header>
+
+<main>
+  <div class="inputs-card">
+    <div class="inp-group">
+      <label>Purchase price</label>
+      <input type="text" id="price" value="$750,000" />
+    </div>
+    <div class="inp-group">
+      <label>Down payment</label>
+      <input type="text" id="down" value="$150,000" />
+    </div>
+    <div class="inp-group">
+      <label>Loan term</label>
+      <select id="term">
+        <option value="30" selected>30-year fixed</option>
+        <option value="15">15-year fixed</option>
+        <option value="20">20-year fixed</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="updateAll()">Calculate</button>
+  </div>
+
+  <div class="stats-row" id="stats"></div>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--green-text);"></span>Lowest cost</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--green-light-text);"></span>Lower cost</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--blue);"></span>Your scenario ★</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--red-light-text);"></span>Higher cost</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--red-text);"></span>Highest cost</span>
+  </div>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table id="matrix">
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="disclaimer">
+    Principal &amp; interest only. Taxes, homeowner's insurance, HOA fees, and PMI (if applicable) are not included and will increase your actual monthly payment. Down payment is held fixed across all price scenarios — only the loan amount changes. Rates shown are for illustrative purposes centered on the Rocket Mortgage 30-year fixed rate as of April 2026. Your actual rate will vary based on credit score, LTV, and other factors. Not financial advice.
+  </p>
+</main>
+
+<footer>Mortgage Payment Matrix &nbsp;·&nbsp; Built for home shoppers &nbsp;·&nbsp; Rates as of Apr 2026</footer>
+
+<script>
+const BASE_RATE = 6.625;
+const STEP_RATE = 0.125;
+const STEP_PRICE = 25000;
+
+function parseMoney(s) {
+  return parseInt(s.replace(/[$,\s]/g, ''), 10) || 0;
+}
+
+function fmtDollar(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function formatPrice(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(3).replace(/\.?0+$/, '') + 'M';
+  return '$' + (n / 1000).toFixed(0) + 'k';
+}
+
+function monthlyPayment(principal, annualRate, years) {
+  if (principal <= 0) return 0;
+  const r = annualRate / 100 / 12;
+  const n = years * 12;
+  if (r === 0) return principal / n;
+  return principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+}
+
+function cellClass(ri, ci) {
+  if (ri === 2 && ci === 2) return 'center-cell';
+  const dist = (ri - 2) + (ci - 2);
+  if (dist <= -3) return 'low-cell';
+  if (dist < 0) return 'near-low';
+  if (dist >= 3) return 'high-cell';
+  if (dist > 0) return 'near-high';
+  return '';
+}
+
+function updateAll() {
+  const basePrice = parseMoney(document.getElementById('price').value);
+  const down = parseMoney(document.getElementById('down').value);
+  const years = parseInt(document.getElementById('term').value);
+  const baseLoan = Math.max(0, basePrice - down);
+  const dpPct = basePrice > 0 ? (down / basePrice * 100).toFixed(1) : '0.0';
+  const ltv = basePrice > 0 ? (baseLoan / basePrice * 100).toFixed(1) : '0.0';
+  const centerPmt = monthlyPayment(baseLoan, BASE_RATE, years);
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="stat-label">Loan amount</div><div class="stat-value">${fmtDollar(baseLoan)}</div></div>
+    <div class="stat"><div class="stat-label">Down payment</div><div class="stat-value">${fmtDollar(down)} <span>(${dpPct}%)</span></div></div>
+    <div class="stat"><div class="stat-label">LTV ratio</div><div class="stat-value">${ltv}%</div></div>
+    <div class="stat highlight"><div class="stat-label">Your monthly payment</div><div class="stat-value">${fmtDollar(centerPmt)}/mo</div></div>
+  `;
+
+  const rates = [-2, -1, 0, 1, 2].map(i => +(BASE_RATE + i * STEP_RATE).toFixed(3));
+  const prices = [-2, -1, 0, 1, 2].map(i => basePrice + i * STEP_PRICE);
+
+  let headHtml = '<tr><th class="row-header">Price \ Rate</th>';
+  rates.forEach((r, ci) => {
+    const cls = ci === 2 ? 'center-col' : '';
+    headHtml += `<th class="${cls}">${r.toFixed(3)}%${ci === 2 ? ' ★' : ''}</th>`;
+  });
+  headHtml += '</tr>';
+  document.getElementById('thead').innerHTML = headHtml;
+
+  let bodyHtml = '';
+  prices.forEach((price, ri) => {
+    const loan = Math.max(0, price - down);
+    const lbl = ri === 2 ? `${formatPrice(price)} ★` : formatPrice(price);
+    bodyHtml += `<tr><td class="row-header">${lbl}</td>`;
+    rates.forEach((r, ci) => {
+      const pmt = monthlyPayment(loan, r, years);
+      const cls = cellClass(ri, ci);
+      bodyHtml += `<td class="${cls}">${fmtDollar(pmt)}</td>`;
+    });
+    bodyHtml += '</tr>';
+  });
+  document.getElementById('tbody').innerHTML = bodyHtml;
+}
+
+document.getElementById('price').addEventListener('keydown', e => { if (e.key === 'Enter') updateAll(); });
+document.getElementById('down').addEventListener('keydown', e => { if (e.key === 'Enter') updateAll(); });
+document.getElementById('term').addEventListener('change', updateAll);
+
+updateAll();
+</script>
+</body>
+</html>
