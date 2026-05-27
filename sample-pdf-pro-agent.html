@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sample Pro PDF — Apex Home Lending</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#e8e8e8;min-height:100vh;padding:2rem;display:flex;flex-direction:column;align-items:center}
+.page-label{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;text-align:center}
+.pro-badge{display:inline-flex;align-items:center;gap:.4rem;background:#1a56db;color:#fff;font-size:.65rem;font-weight:700;border-radius:20px;padding:.3rem .85rem;letter-spacing:.05em;margin-bottom:.75rem}
+.pdf-page{width:780px;background:#fff;box-shadow:0 4px 40px rgba(0,0,0,.18);border-radius:4px;overflow:hidden;page-break-inside:avoid}
+
+/* ── BRANDED HEADER ── */
+.pdf-header{background:#1c3a6e;padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.brand-left{display:flex;align-items:center;gap:.85rem}
+.brand-logo{width:42px;height:42px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.brand-logo-inner{width:28px;height:28px}
+.brand-logo-inner svg{width:28px;height:28px}
+.brand-name{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.25rem;color:#fff}
+.brand-tag{font-size:.62rem;color:rgba(255,255,255,.45);margin-top:2px;letter-spacing:.03em}
+.brand-right{text-align:right}
+.agent-name{font-size:.82rem;font-weight:600;color:#fff}
+.agent-nmls{font-size:.65rem;color:rgba(255,255,255,.45);margin-top:2px}
+.agent-contact{font-size:.65rem;color:rgba(255,255,255,.45);margin-top:2px}
+
+/* ── SCENARIO BANNER ── */
+.scenario-banner{background:#f0f4fb;border-bottom:1px solid #dde3eb;padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.scenario-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7a99}
+.scenario-address{font-size:.85rem;font-weight:600;color:#1c2840}
+.scenario-date{font-size:.65rem;color:#8494a8}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid #edf0f5}
+.stat-cell{padding:.8rem 1rem;text-align:center;border-right:1px solid #edf0f5}
+.stat-cell:last-child{border-right:none}
+.stat-lbl{font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#8494a8;margin-bottom:3px}
+.stat-val{font-size:.88rem;font-weight:600;color:#1c2840}
+.stat-cell.highlight{background:#e4f5f2}
+.stat-cell.highlight .stat-val{color:#0b8f7a}
+
+/* ── MATRIX ── */
+.matrix-section{padding:1.25rem 2rem}
+.matrix-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8494a8;margin-bottom:.65rem}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead th{background:#1c2840;color:rgba(255,255,255,.5);font-size:.6rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;padding:.55rem .45rem;text-align:center}
+thead th:first-child{text-align:left;padding-left:.75rem;color:rgba(255,255,255,.3)}
+thead th.cc{color:#c9ede6;font-weight:700}
+tbody td{padding:.55rem .45rem;text-align:center;border:1px solid #f0f2f5;font-size:.78rem;font-weight:500}
+tbody td:first-child{text-align:left;padding-left:.75rem;font-size:.7rem;font-weight:600;color:#8494a8;background:#fafbfc;border-right:1px solid #e8ebf0}
+.c-low{background:#e6f4ed;color:#1e6e42;font-weight:600}
+.c-nlow{background:#f0faf4;color:#2a7a4e}
+.c-center{background:#e4f5f2;color:#09544a;font-weight:700;border:1.5px solid #0b8f7a!important}
+.c-nhigh{background:#fdf5f5;color:#c04040}
+.c-high{background:#fdeaea;color:#bf3030;font-weight:600}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem}
+.leg{display:flex;align-items:center;gap:.3rem;font-size:.62rem;color:#8494a8}
+.leg-dot{width:8px;height:8px;border-radius:2px}
+
+/* ── INSIGHTS SECTION ── */
+.insights-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:0 2rem 1.25rem}
+.insight-card{border:1px solid #e8ebf0;border-radius:8px;padding:.85rem 1rem}
+.insight-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8494a8;margin-bottom:.5rem}
+.insight-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid #f4f5f7;font-size:.76rem}
+.insight-row:last-child{border-bottom:none}
+.insight-lbl{color:#6b7a99}
+.insight-val{font-weight:600;color:#1c2840}
+.insight-val.green{color:#1e6e42}
+.insight-val.amber{color:#c47d2a}
+
+/* ── BUYDOWN BOX ── */
+.buydown-box{background:#fffbf0;border:1px solid #e8c875;border-radius:8px;padding:.85rem 1rem}
+.buydown-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8a6010;margin-bottom:.5rem}
+.buydown-highlight{background:#1c3a6e;border-radius:6px;padding:.5rem .75rem;display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}
+.buydown-highlight-lbl{font-size:.7rem;color:rgba(255,255,255,.65);font-weight:500}
+.buydown-highlight-val{font-size:.9rem;font-weight:700;color:#fff}
+
+/* ── FOOTER ── */
+.pdf-footer{background:#f8f9fb;border-top:1px solid #e8ebf0;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-family:'Instrument Serif',serif;font-style:italic;font-size:.82rem;color:#1c3a6e}
+.footer-disclaimer{font-size:.58rem;color:#aab4c4;max-width:400px;line-height:1.5;text-align:center}
+.footer-date{font-size:.62rem;color:#aab4c4;text-align:right}
+
+/* ── WATERMARK BADGE ── */
+.pro-powered{display:flex;align-items:center;gap:.3rem;font-size:.58rem;color:#aab4c4}
+.pro-powered strong{color:#8494a8}
+
+/* Back button */
+.back-btn{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;color:#1a56db;background:#fff;border:1px solid #c7d9fc;border-radius:7px;padding:.45rem 1rem;cursor:pointer;text-decoration:none;margin-bottom:.75rem;display:inline-flex;align-items:center;gap:.4rem}
+</style>
+</head>
+<body>
+
+<a href="plans.html" class="back-btn">← Back to LoanCheatSheet.com</a>
+<div class="page-label">Sample Pro PDF Export — Agent Branded</div>
+<div style="text-align:center;margin-bottom:1.25rem">
+  <span class="pro-badge">⭐ Pro Feature — White-Label PDF Export</span>
+  <div style="font-size:.75rem;color:#666;margin-top:.3rem">This is what your client receives. Your branding, your contact info — no mention of LoanCheatSheet.com.</div>
+</div>
+
+<div class="pdf-page">
+
+  <!-- BRANDED HEADER -->
+  <div class="pdf-header">
+    <div class="brand-left">
+      <div class="brand-logo">
+        <svg class="brand-logo-inner" viewBox="0 0 28 28">
+          <rect x="0"  y="0"  width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="10" y="0"  width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="20" y="0"  width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="0"  y="10" width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="10" y="10" width="7" height="7" rx="1.5" fill="#1c3a6e"/>
+          <rect x="20" y="10" width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="0"  y="20" width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="10" y="20" width="7" height="7" rx="1.5" fill="#dde3eb"/>
+          <rect x="20" y="20" width="7" height="7" rx="1.5" fill="#dde3eb"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">Apex Home Lending</div>
+        <div class="brand-tag">Your trusted mortgage partner</div>
+      </div>
+    </div>
+    <div class="brand-right">
+      <div class="agent-name">Sarah Chen, Loan Officer</div>
+      <div class="agent-nmls">NMLS #1234567 · CA BRE #9876543</div>
+      <div class="agent-contact">sarah.chen@apexlending.com · (310) 555-0182</div>
+    </div>
+  </div>
+
+  <!-- SCENARIO BANNER -->
+  <div class="scenario-banner">
+    <div>
+      <div class="scenario-label">Mortgage Scenario Summary</div>
+      <div class="scenario-address">142 Maple Drive, Pasadena, CA 91103</div>
+    </div>
+    <div style="text-align:right">
+      <div class="scenario-date">Prepared: May 19, 2026</div>
+      <div class="scenario-date">30-Year Fixed · Conforming</div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="stat-lbl">Purchase Price</div>
+      <div class="stat-val">$575,000</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-lbl">Down Payment</div>
+      <div class="stat-val">$115,000 <span style="font-size:.65rem;color:#8494a8">(20%)</span></div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-lbl">Loan Amount</div>
+      <div class="stat-val">$460,000</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-lbl">Interest Rate</div>
+      <div class="stat-val">6.625%</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-lbl">LTV</div>
+      <div class="stat-val">80.0%</div>
+    </div>
+    <div class="stat-cell highlight">
+      <div class="stat-lbl">Monthly P&I</div>
+      <div class="stat-val">$2,946</div>
+    </div>
+  </div>
+
+  <!-- MATRIX -->
+  <div class="matrix-section">
+    <div class="matrix-title">Payment Matrix — Monthly Principal & Interest</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Price \ Rate</th>
+          <th>6.250%</th><th>6.375%</th><th>6.500%</th><th class="cc">6.625% ★</th><th>6.750%</th><th>6.875%</th><th>7.000%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>$525k</td><td class="c-low">$2,664</td><td class="c-low">$2,708</td><td class="c-nlow">$2,753</td><td class="c-nlow">$2,799</td><td class="c-nhigh">$2,845</td><td class="c-nhigh">$2,891</td><td class="c-high">$2,938</td></tr>
+        <tr><td>$550k</td><td class="c-nlow">$2,791</td><td class="c-nlow">$2,837</td><td class="c-nlow">$2,884</td><td class="c-nlow">$2,931</td><td class="c-nhigh">$2,979</td><td class="c-high">$3,027</td><td class="c-high">$3,076</td></tr>
+        <tr><td>$575k ★</td><td class="c-nlow">$2,917</td><td class="c-nlow">$2,965</td><td class="c-nlow">$3,014</td><td class="c-center">$2,946 ★</td><td class="c-nhigh">$3,113</td><td class="c-high">$3,163</td><td class="c-high">$3,214</td></tr>
+        <tr><td>$600k</td><td class="c-nhigh">$3,044</td><td class="c-nhigh">$3,094</td><td class="c-nhigh">$3,145</td><td class="c-nhigh">$3,196</td><td class="c-high">$3,247</td><td class="c-high">$3,299</td><td class="c-high">$3,352</td></tr>
+        <tr><td>$625k</td><td class="c-high">$3,171</td><td class="c-high">$3,223</td><td class="c-high">$3,275</td><td class="c-high">$3,328</td><td class="c-high">$3,381</td><td class="c-high">$3,435</td><td class="c-high">$3,490</td></tr>
+      </tbody>
+    </table>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#1e6e42"></div>Lowest range</div>
+      <div class="leg"><div class="leg-dot" style="background:#2a7a4e"></div>Below market</div>
+      <div class="leg"><div class="leg-dot" style="background:#0b8f7a"></div>Your scenario ★</div>
+      <div class="leg"><div class="leg-dot" style="background:#c04040"></div>Above market</div>
+      <div class="leg"><div class="leg-dot" style="background:#bf3030"></div>Highest range</div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS + BUYDOWN -->
+  <div class="insights-row">
+    <div class="insight-card">
+      <div class="insight-title">What Moves Your Payment</div>
+      <div class="insight-row"><span class="insight-lbl">Each 0.125% rate change</span><span class="insight-val">± $59/mo</span></div>
+      <div class="insight-row"><span class="insight-lbl">Each $25k price change</span><span class="insight-val">± $150/mo</span></div>
+      <div class="insight-row"><span class="insight-lbl">Negotiate $25k off price</span><span class="insight-val green">−$150/mo</span></div>
+      <div class="insight-row"><span class="insight-lbl">Lock 0.125% lower rate</span><span class="insight-val green">−$59/mo</span></div>
+      <div class="insight-row" style="background:#e4f5f2;margin:0 -.2rem;padding:.35rem .2rem;border-radius:4px;border-bottom:none"><span class="insight-lbl" style="color:#0b8f7a;font-weight:600">Best combined move</span><span class="insight-val" style="color:#0b8f7a">−$209/mo saved</span></div>
+    </div>
+    <div class="buydown-box">
+      <div class="buydown-title">Rate Buydown Analysis</div>
+      <div class="insight-row"><span class="insight-lbl">Buy 1 point (1% of loan)</span><span class="insight-val">$4,600 upfront</span></div>
+      <div class="insight-row"><span class="insight-lbl">Rate reduction</span><span class="insight-val">6.625% → 6.375%</span></div>
+      <div class="insight-row"><span class="insight-lbl">Monthly savings</span><span class="insight-val green">$118/mo</span></div>
+      <div class="insight-row"><span class="insight-lbl">Break-even</span><span class="insight-val amber">39 months (3.2 yrs)</span></div>
+      <div class="buydown-highlight">
+        <div class="buydown-highlight-lbl">If you stay 7+ years</div>
+        <div class="buydown-highlight-val">Net savings: $4,312</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="pdf-footer">
+    <div>
+      <div class="footer-brand">Apex Home Lending</div>
+      <div style="font-size:.58rem;color:#aab4c4;margin-top:2px">Sarah Chen · sarah.chen@apexlending.com · (310) 555-0182</div>
+    </div>
+    <div class="footer-disclaimer">Rates and payments are estimates for illustration purposes only. Not a loan commitment. Verify all figures with your lender before making financial decisions.</div>
+    <div>
+      <div class="footer-date">May 19, 2026</div>
+      <div class="pro-powered" style="margin-top:3px;justify-content:flex-end"><strong>Powered by</strong> LoanCheatSheet Pro</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:1.5rem;text-align:center;font-size:.72rem;color:#888;max-width:600px">
+  <strong style="color:#555">Free version</strong> shows the same matrix with LoanCheatSheet.com branding and no agent info. 
+  <strong style="color:#1c3a6e">Pro version</strong> replaces all branding with yours — logo, colors, name, NMLS number, and contact details throughout.
+</div>
+
+</body>
+</html>

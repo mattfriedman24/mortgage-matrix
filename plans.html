@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LoanCheatSheet.com — The Mortgage Tool That Closes More Deals</title>
+<meta name="description" content="The mortgage payment matrix used by top agents and loan officers. White-label it with your brand, share it with clients, and close more deals. Free for buyers. Pro for professionals."/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07090f;
+  --ink2:#131929;
+  --slate:#3d4f6b;
+  --muted:#7888a0;
+  --rule:#e4e8ef;
+  --bg:#f8f9fb;
+  --surface:#ffffff;
+  --blue:#1a56db;
+  --blue2:#1347c4;
+  --blue-lt:#eef3fd;
+  --blue-mid:#c7d9fc;
+  --teal:#0b8f7a;
+  --teal-lt:#e4f5f2;
+  --amber:#c47d2a;
+  --amber-lt:#fdf4e7;
+  --green:#1a7a40;
+  --green-lt:#e6f7ed;
+  --radius:10px;
+  --radius-lg:16px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow:0 2px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6;overflow-x:hidden}
+
+/* ── TYPOGRAPHY ─────────────────────────────────────────────── */
+h1,h2,h3{font-family:'Instrument Serif',serif;font-weight:400;line-height:1.1;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,5vw,3.8rem)}
+h2{font-size:clamp(1.8rem,3.5vw,2.8rem)}
+h3{font-size:1.35rem}
+p{color:var(--slate);line-height:1.75}
+
+/* ── NAV ────────────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-mark{width:32px;height:32px;background:var(--ink2);border-radius:7px;display:grid;grid-template-columns:repeat(3,1fr);gap:2.5px;padding:6px;flex-shrink:0}
+.nav-mark span{background:rgba(255,255,255,.2);border-radius:1.5px}
+.nav-mark span.active{background:var(--teal)}
+.nav-name{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.15rem;color:var(--ink)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-ctas{display:flex;align-items:center;gap:.65rem}
+.btn-ghost{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:7px;padding:.45rem 1rem;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-ghost:hover{border-color:var(--ink);background:var(--bg)}
+.btn-primary{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:#fff;background:var(--blue);border:none;border-radius:7px;padding:.48rem 1.1rem;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-primary:hover{background:var(--blue2)}
+
+/* ── HERO ───────────────────────────────────────────────────── */
+.hero{background:var(--ink2);position:relative;overflow:hidden;padding:6rem 2rem 5rem}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(26,86,219,.25) 0%,transparent 70%)}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1.1rem;background:rgba(11,143,122,.1);border:1px solid rgba(11,143,122,.25);border-radius:20px;padding:.3rem .85rem}
+.hero h1{color:#fff;margin-bottom:1.25rem;font-style:italic}
+.hero h1 em{color:#6eb8fc;font-style:normal}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.55);line-height:1.75;margin-bottom:2rem;font-weight:300}
+.hero-ctas{display:flex;gap:.85rem;flex-wrap:wrap;margin-bottom:2rem}
+.btn-hero-primary{font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:600;color:#fff;background:var(--blue);border:none;border-radius:8px;padding:.7rem 1.6rem;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:.45rem}
+.btn-hero-primary:hover{background:var(--blue2);transform:translateY(-1px)}
+.btn-hero-ghost{font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;color:rgba(255,255,255,.75);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:.7rem 1.6rem;cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:.45rem}
+.btn-hero-ghost:hover{background:rgba(255,255,255,.12);color:#fff}
+.hero-proof{font-size:.75rem;color:rgba(255,255,255,.28);display:flex;align-items:center;gap:.5rem}
+.hero-proof::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.2)}
+
+/* Hero tool mockup */
+.hero-mockup{position:relative}
+.mockup-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:1.25rem;backdrop-filter:blur(4px)}
+.mockup-header{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.mockup-dot{width:8px;height:8px;border-radius:50%}
+.mockup-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.1)}
+.mockup-title{font-size:.7rem;font-weight:500;color:rgba(255,255,255,.4);margin-left:auto}
+.mockup-table{width:100%;border-collapse:collapse;font-size:.72rem}
+.mockup-table th{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4);padding:.5rem .4rem;text-align:center;font-weight:500;font-size:.62rem;letter-spacing:.04em}
+.mockup-table th:first-child{text-align:left}
+.mockup-table td{padding:.5rem .4rem;text-align:center;border:1px solid rgba(255,255,255,.05);font-size:.72rem;font-weight:500}
+.mockup-table td:first-child{text-align:left;color:rgba(255,255,255,.35);font-size:.65rem}
+.mc-low{background:rgba(26,122,64,.3);color:#6ee8a0}
+.mc-nlow{background:rgba(26,122,64,.15);color:#8ee8b8}
+.mc-center{background:rgba(11,143,122,.35);color:#7dddd0;font-weight:700;border:1px solid rgba(11,143,122,.5)!important}
+.mc-nhigh{background:rgba(191,48,48,.12);color:#f4a0a0}
+.mc-high{background:rgba(191,48,48,.25);color:#f47a7a}
+.mockup-badge{position:absolute;top:-12px;right:16px;background:var(--teal);color:#fff;font-size:.65rem;font-weight:700;padding:.3rem .85rem;border-radius:20px;letter-spacing:.04em}
+.mockup-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem}
+.mockup-stat{background:rgba(255,255,255,.04);border-radius:6px;padding:.45rem .6rem;border:1px solid rgba(255,255,255,.07)}
+.mockup-stat-lbl{font-size:.58rem;color:rgba(255,255,255,.3);margin-bottom:2px}
+.mockup-stat-val{font-size:.82rem;font-weight:600;color:rgba(255,255,255,.8)}
+
+/* ── LOGOS / SOCIAL PROOF ───────────────────────────────────── */
+.logos-strip{padding:2.5rem 2rem;border-bottom:1px solid var(--rule);background:var(--bg)}
+.logos-inner{max-width:1100px;margin:0 auto;text-align:center}
+.logos-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:1.25rem}
+.logos-row{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;opacity:.7}
+.logo-pill{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.05rem;color:var(--ink2)}
+
+/* ── SECTION SHARED ─────────────────────────────────────────── */
+section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-eyebrow{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:.65rem}
+.section-heading{margin-bottom:1rem;color:var(--ink2)}
+.section-sub{font-size:1rem;color:var(--slate);max-width:520px;line-height:1.75;margin-bottom:3rem}
+
+/* ── HOW IT WORKS ───────────────────────────────────────────── */
+.how{background:var(--bg)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.step{position:relative;padding:1.75rem;background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+.step-num{width:36px;height:36px;border-radius:8px;background:var(--blue-lt);color:var(--blue);font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.step h3{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink2);margin-bottom:.5rem}
+.step p{font-size:.85rem;color:var(--slate);line-height:1.65}
+.step-connector{position:absolute;top:36px;right:-1.1rem;width:2.2rem;height:2px;background:linear-gradient(to right,var(--rule),transparent);z-index:1}
+
+/* ── FEATURES ───────────────────────────────────────────────── */
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
+.feat-card{padding:1.75rem;border:1px solid var(--rule);border-radius:var(--radius-lg);transition:border-color .15s,box-shadow .15s;background:var(--surface)}
+.feat-card:hover{border-color:var(--blue-mid);box-shadow:var(--shadow)}
+.feat-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+.feat-card h3{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.feat-card p{font-size:.84rem;color:var(--slate);line-height:1.65}
+.feat-free-tag{display:inline-block;font-size:.62rem;font-weight:600;background:var(--green-lt);color:var(--green);border-radius:4px;padding:1px 7px;margin-top:.5rem;letter-spacing:.03em}
+.feat-pro-tag{display:inline-block;font-size:.62rem;font-weight:600;background:var(--blue-lt);color:var(--blue);border-radius:4px;padding:1px 7px;margin-top:.5rem;letter-spacing:.03em}
+
+/* ── COMPARISON TABLE ───────────────────────────────────────── */
+.compare{background:var(--ink2)}
+.compare .section-eyebrow{color:#6eb8fc}
+.compare .section-heading{color:#fff!important}
+.compare .section-sub{color:rgba(255,255,255,.45)!important}
+.compare-table{width:100%;border-collapse:collapse;margin-top:2rem}
+.compare-table thead th{padding:1.1rem 1.25rem;font-size:.78rem;font-weight:600;text-align:center;border-bottom:1px solid rgba(255,255,255,.08)}
+.compare-table thead th:first-child{text-align:left;color:rgba(255,255,255,.35)}
+.compare-table thead th.col-free{color:rgba(255,255,255,.55)}
+.compare-table thead th.col-pro{color:#fff;background:rgba(26,86,219,.25);border-radius:8px 8px 0 0}
+.compare-table thead th.col-ent{color:rgba(255,255,255,.55)}
+.compare-table tbody td{padding:.85rem 1.25rem;font-size:.84rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.55)}
+.compare-table tbody td:first-child{text-align:left;color:rgba(255,255,255,.55);font-size:.82rem}
+.compare-table tbody td.col-pro{background:rgba(26,86,219,.08)}
+.compare-table .check{color:#3ecfb8;font-size:1rem}
+.compare-table .cross{color:rgba(255,255,255,.2)}
+.compare-table .partial{color:var(--amber);font-size:.78rem}
+
+/* ── PRICING ────────────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.price-card{border:1px solid var(--rule);border-radius:var(--radius-lg);padding:2rem;background:var(--surface);transition:box-shadow .15s}
+.price-card:hover{box-shadow:var(--shadow-lg)}
+.price-card.featured{border-color:var(--blue);border-width:2px;position:relative;box-shadow:0 0 0 4px var(--blue-lt)}
+.price-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:.65rem;font-weight:700;padding:.28rem .9rem;border-radius:20px;white-space:nowrap;letter-spacing:.05em}
+.price-tier{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:.6rem}
+.price-card.featured .price-tier{color:var(--blue)}
+.price-amount{font-family:'Instrument Serif',serif;font-size:3rem;font-style:italic;color:var(--ink2);line-height:1;margin-bottom:.2rem}
+.price-amount span{font-size:1.1rem;font-style:normal;color:var(--muted);vertical-align:middle}
+.price-period{font-size:.78rem;color:var(--muted);margin-bottom:.5rem}
+.price-annual{font-size:.75rem;color:var(--green);font-weight:500;margin-bottom:1.25rem;min-height:1.2em}
+.price-desc{font-size:.83rem;color:var(--slate);line-height:1.6;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.75rem}
+.price-features li{font-size:.83rem;color:var(--ink2);display:flex;align-items:flex-start;gap:.6rem}
+.price-features li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px}
+.price-features li.dim{color:#aab4c4}
+.price-features li.dim::before{content:'—';color:#cbd5e0}
+.btn-plan{width:100%;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;border-radius:8px;padding:.68rem 1rem;cursor:pointer;border:none;transition:all .15s}
+.btn-plan-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--rule)!important}
+.btn-plan-ghost:hover{border-color:var(--ink)!important}
+.btn-plan-primary{background:var(--blue);color:#fff}
+.btn-plan-primary:hover{background:var(--blue2)}
+.btn-plan-dark{background:var(--ink2);color:#fff}
+.btn-plan-dark:hover{background:var(--ink)}
+
+/* ── WHITE LABEL PREVIEW ────────────────────────────────────── */
+.wl{background:var(--bg)}
+.wl-demo{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3rem}
+.wl-config{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow)}
+.wl-config h3{font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:1.1rem}
+.wl-field{margin-bottom:.85rem}
+.wl-field label{display:block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.3rem}
+.wl-input{width:100%;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink2);background:#f5f6f8;border:1.5px solid var(--rule);border-radius:7px;padding:.48rem .75rem;outline:none}
+.wl-colors{display:flex;gap:.6rem;margin-top:.3rem}
+.wl-swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.wl-swatch.active{border-color:var(--ink)}
+.wl-preview{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--rule)}
+.wl-preview-header{background:#1a3a6e;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.wl-preview-brand{font-family:'Instrument Serif',serif;font-style:italic;font-size:1rem;color:#fff}
+.wl-preview-body{background:#f8f9fb;padding:1.25rem}
+.wl-preview-tagline{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:2px}
+.wl-badge{background:rgba(26,86,219,.12);color:var(--blue);font-size:.62rem;font-weight:700;border-radius:4px;padding:2px 8px;letter-spacing:.04em;align-self:center}
+
+/* ── TESTIMONIALS ───────────────────────────────────────────── */
+.testimonials{background:var(--bg)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.testi-card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow-sm)}
+.testi-quote{font-size:.9rem;color:var(--ink2);line-height:1.7;margin-bottom:1.25rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.75rem}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue-lt);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--blue);flex-shrink:0}
+.testi-name{font-size:.82rem;font-weight:600;color:var(--ink2)}
+.testi-role{font-size:.72rem;color:var(--slate)}
+.testi-stars{color:#f59e0b;font-size:.75rem;margin-bottom:.6rem;letter-spacing:1px}
+
+/* ── FAQ ────────────────────────────────────────────────────── */
+.faq-list{max-width:720px;margin:2.5rem auto 0;display:flex;flex-direction:column;gap:.75rem}
+.faq-item{border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.faq-q{width:100%;text-align:left;padding:1.1rem 1.25rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink2);background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.faq-q:hover{background:var(--bg)}
+.faq-chevron{color:var(--muted);font-size:.7rem;transition:transform .2s;flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;font-size:.85rem;color:var(--muted);line-height:1.75}
+.faq-a-inner{padding:0 1.25rem 1.1rem}
+.faq-item.open .faq-a{max-height:200px}
+.faq-item.open .faq-chevron{transform:rotate(90deg)}
+
+/* ── CTA BANNER ─────────────────────────────────────────────── */
+.cta-banner{background:linear-gradient(135deg,#0d1f45 0%,#1a3a7c 50%,#0d3052 100%);padding:5rem 2rem;text-align:center}
+.cta-banner h2{color:#fff;margin-bottom:.75rem;font-style:italic}
+.cta-banner p{color:rgba(255,255,255,.5);font-size:1rem;max-width:480px;margin:0 auto 2rem;line-height:1.7}
+.cta-btn-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+footer{background:var(--ink);padding:3rem 2rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+.footer-brand p{font-size:.82rem;color:rgba(255,255,255,.3);line-height:1.7;margin-top:.65rem;max-width:260px}
+.footer-col h4{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:.85rem}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);text-decoration:none;margin-bottom:.45rem;transition:color .15s}
+.footer-col a:hover{color:rgba(255,255,255,.75)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,.2)}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:2.5rem}
+  .hero-mockup{order:-1}
+  .steps{grid-template-columns:1fr}
+  .step-connector{display:none}
+  .features-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+  .wl-demo{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .compare-table{font-size:.75rem}
+}
+@media(max-width:600px){
+  nav .nav-links{display:none}
+  .footer-top{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-mark">
+        <span></span><span></span><span></span>
+        <span></span><span class="active"></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="nav-name">LoanCheatSheet.com</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-ctas">
+      <a href="plans.html" class="btn-ghost" style="display:inline-flex;align-items:center;gap:.4rem">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Open the Tool
+      </a>
+      <a href="#pricing" class="btn-primary">Get Pro →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Free for everyone · Pro for professionals</div>
+      <h1>Every mortgage scenario,<br><em>instantly clear.</em></h1>
+      <p class="hero-sub">See how price, rate, down payment, and every negotiation move affects your monthly payment — all at once. Built for home buyers, real estate professionals, and anyone who wants to fully understand their mortgage before they sign.</p>
+      <div class="hero-ctas">
+        <a href="plans.html" class="btn-hero-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Try the Free Tool
+        </a>
+        <a href="#pricing" class="btn-hero-ghost">
+          See Pro Plans →
+        </a>
+      </div>
+      <div class="hero-proof">No account required &nbsp;·&nbsp; No ads &nbsp;·&nbsp; Always free to use</div>
+    </div>
+    <div class="hero-mockup">
+      <div class="mockup-badge">★ Your scenario</div>
+      <div class="mockup-card">
+        <div class="mockup-header">
+          <div class="mockup-dot" style="background:#ff6058"></div>
+          <div class="mockup-dot" style="background:#ffbb2c;margin-left:4px"></div>
+          <div class="mockup-dot" style="background:#28c840;margin-left:4px"></div>
+          <div class="mockup-bar" style="flex:1;margin-left:.75rem"></div>
+          <div class="mockup-title">Payment Matrix</div>
+        </div>
+        <table class="mockup-table">
+          <thead>
+            <tr>
+              <th>Price \ Rate</th>
+              <th>6.375%</th><th>6.500%</th><th style="color:#7dddd0">6.625%★</th><th>6.750%</th><th>6.875%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$450k</td><td class="mc-low">$2,302</td><td class="mc-nlow">$2,344</td><td class="mc-nlow">$2,387</td><td class="mc-nhigh">$2,430</td><td class="mc-high">$2,473</td></tr>
+            <tr><td>$475k</td><td class="mc-nlow">$2,431</td><td class="mc-nlow">$2,475</td><td class="mc-nlow">$2,519</td><td class="mc-nhigh">$2,564</td><td class="mc-nhigh">$2,609</td></tr>
+            <tr><td>$500k ★</td><td class="mc-nlow">$2,561</td><td class="mc-nlow">$2,607</td><td class="mc-center">$2,561★</td><td class="mc-nhigh">$2,698</td><td class="mc-nhigh">$2,745</td></tr>
+            <tr><td>$525k</td><td class="mc-nhigh">$2,690</td><td class="mc-nhigh">$2,739</td><td class="mc-nhigh">$2,788</td><td class="mc-high">$2,838</td><td class="mc-high">$2,888</td></tr>
+            <tr><td>$550k</td><td class="mc-high">$2,820</td><td class="mc-high">$2,870</td><td class="mc-high">$2,922</td><td class="mc-high">$2,974</td><td class="mc-high">$3,026</td></tr>
+          </tbody>
+        </table>
+        <div class="mockup-stat-row">
+          <div class="mockup-stat"><div class="mockup-stat-lbl">Monthly P&I</div><div class="mockup-stat-val" style="color:#7dddd0">$2,561</div></div>
+          <div class="mockup-stat"><div class="mockup-stat-lbl">Rate</div><div class="mockup-stat-val">6.625%</div></div>
+          <div class="mockup-stat"><div class="mockup-stat-lbl">Loan Type</div><div class="mockup-stat-val">Conform.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF STRIP -->
+<div class="logos-strip">
+  <div class="logos-inner">
+    <div class="logos-label">Built for</div>
+    <div class="logos-row">
+      <span class="logo-pill">Home buyers</span>
+      <span class="logo-pill">Real estate agents</span>
+      <span class="logo-pill">Loan officers</span>
+      <span class="logo-pill">Mortgage brokers</span>
+      <span class="logo-pill">Credit unions</span>
+      <span class="logo-pill">Banks &amp; lenders</span>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-heading" style="font-style:italic">Built for a smooth process, start to finish</h2>
+    <p class="section-sub">Whether you're a first-time buyer exploring numbers or a professional sharing scenarios with clients — the process is the same: fast, clear, and frustration-free.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Set up in minutes</h3>
+        <p>Jump straight in with no account required. Professionals can white-label in minutes — no developer or tech skills needed.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Explore every scenario</h3>
+        <p>Adjust price, rate, down payment, and costs freely. Every assumption is editable, every calculation updates instantly.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Decide with confidence</h3>
+        <p>When every number is transparent and every scenario has been explored, decisions happen naturally — for buyers and professionals alike.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-eyebrow">Features</div>
+    <h2 class="section-heading" style="font-style:italic">Everything a professional needs</h2>
+    <p class="section-sub">The free tool is powerful. The Pro version gives you ownership of the experience.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon" style="background:#e4f5f2">&#128202;</div>
+        <h3>Payment Matrix + Unlimited Adjustments</h3>
+        <p>A 5&times;5 grid showing every payment scenario across rates and prices simultaneously. Every assumption &mdash; price, rate, down payment, PMI, taxes, HOA &mdash; is fully editable, with results that update instantly.</p>
+        <span class="feat-free-tag">Free + Pro</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:var(--blue-lt)">&#129518;</div>
+        <h3>Full Suite of Mortgage Tools</h3>
+        <p>Rent vs. Buy, Affordability, Loan Comparison, Refinance Calculator, Cash Optimizer, Negotiation Analyzer, Cost of Waiting, and Credit Score Impact &mdash; all in one place.</p>
+        <span class="feat-free-tag">Free + Pro</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:var(--amber-lt)">&#128196;</div>
+        <h3>PDF &amp; Email Export</h3>
+        <p>Save your scenario as a one-page PDF or email it directly. Pro users get branded exports with their logo and contact info automatically included.</p>
+        <span class="feat-free-tag">Free + Pro</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:var(--blue-lt)">&#127991;</div>
+        <h3>White-Label &amp; Website Integration</h3>
+        <p>Pro: your logo, colors, and name throughout. Enterprise: embed directly into your own website or client portal &mdash; fully integrated, fully branded, zero visible connection to LoanCheatSheet.com.</p>
+        <span class="feat-pro-tag">Pro + Enterprise</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink2);padding:5rem 2rem" id="compare">
+  <div class="section-inner">
+    <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#6eb8fc;margin-bottom:.65rem">Compare plans</div>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;font-style:italic;letter-spacing:-.02em;color:#fff;margin-bottom:.75rem">Free vs. Pro vs. Enterprise</h2>
+    <p style="font-size:1rem;color:rgba(255,255,255,.45);max-width:520px;line-height:1.75;margin-bottom:2rem">The core tool is free for everyone. Pro unlocks everything a professional needs to run their business.</p>
+    <div style="overflow-x:auto"><table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-free">Free</th>
+            <th class="col-pro">⭐ Pro</th>
+            <th class="col-ent">Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Payment Matrix (5×5)</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>All calculation tools</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Refinance Calculator</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Unlimited assumption adjustments</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>White-label branding</td><td class="cross">—</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>PDF export</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Email scenario summary</td><td class="check">✓</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Shareable scenario links</td><td class="cross">—</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Save &amp; recall scenarios</td><td class="cross">—</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Remove LoanCheatSheet branding</td><td class="cross">—</td><td class="col-pro check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Team / multi-seat access</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td></tr>
+          <tr><td>Website / portal integration</td><td class="cross">—</td><td class="partial">iframe</td><td class="check">✓ Full API</td></tr>
+          <tr><td>Dedicated support + onboarding</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-heading" style="font-style:italic">Simple, transparent pricing</h2>
+    <p class="section-sub">Start free. Upgrade when you're ready to make it yours. One deal pays for a year.</p>
+    <div class="pricing-grid">
+
+      <!-- FREE -->
+      <div class="price-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">$<span style="font-size:3rem">0</span></div>
+        <div class="price-period">forever</div>
+        <div class="price-annual">&nbsp;</div>
+        <div class="price-desc">Full access to the payment matrix and all calculation tools. Perfect for home buyers doing their research.</div>
+        <ul class="price-features">
+          <li>5×5 payment matrix</li>
+          <li>All 8+ calculator tools</li>
+          <li>Refinance calculator</li>
+          <li>Rent vs. Buy analysis</li>
+          <li>PDF &amp; email export</li>
+          <li class="dim">White-label branding</li>
+          <li class="dim">Shareable links</li>
+        </ul>
+        <a href="plans.html"><button class="btn-plan btn-plan-ghost">Try the Free Tool</button></a>
+      </div>
+
+      <!-- PRO -->
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">$<span>20</span><span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <div class="price-period">per user</div>
+        <div class="price-annual" style="color:var(--green)">$200/yr — save $40</div>
+        <div class="price-desc">Everything in Free, plus white-labeling and client-facing tools. For individual agents and loan officers.</div>
+        <ul class="price-features">
+          <li>Everything in Free</li>
+          <li>Your logo &amp; brand colors</li>
+          <li>PDF export with your branding</li>
+          <li>Email scenarios to clients</li>
+          <li>Shareable scenario links</li>
+          <li>Save &amp; recall scenarios</li>
+          <li>Remove LoanCheatSheet branding</li>
+        </ul>
+        <button class="btn-plan btn-plan-primary">Get Started →</button>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-amount" style="font-size:2rem;padding-top:.5rem">Custom</div>
+        <div class="price-period">per organization</div>
+        <div class="price-annual">&nbsp;</div>
+        <div class="price-desc">For mortgage companies, credit unions, banks, and real estate brokerages with multiple users.</div>
+        <ul class="price-features">
+          <li>Everything in Pro</li>
+          <li>Multi-seat team access</li>
+          <li>Website &amp; portal integration</li>
+          <li>Volume pricing</li>
+          <li>Dedicated onboarding</li>
+          <li>Priority support</li>
+          <li>Custom feature requests</li>
+        </ul>
+        <button class="btn-plan btn-plan-dark">Request a Demo</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHITE LABEL PREVIEW -->
+<section class="wl" id="whitelabel">
+  <div class="section-inner">
+    <div class="section-eyebrow">White-label demo</div>
+    <h2 class="section-heading" style="font-style:italic">Your brand. Your tool.</h2>
+    <p class="section-sub">Pro subscribers get a fully branded version of the tool — indistinguishable from something your tech team built.</p>
+    <div class="wl-demo">
+      <div class="wl-config">
+        <h3>Brand configurator</h3>
+        <div class="wl-field">
+          <label>Your company name</label>
+          <input class="wl-input" type="text" value="Apex Home Lending" readonly/>
+        </div>
+        <div class="wl-field">
+          <label>Tagline</label>
+          <input class="wl-input" type="text" value="Your trusted lending partner" readonly/>
+        </div>
+        <div class="wl-field">
+          <label>Brand color</label>
+          <div class="wl-colors">
+            <div class="wl-swatch" style="background:#1a3a6e;border-color:#1a3a6e" title="Navy"></div>
+            <div class="wl-swatch active" style="background:#1a3a6e"></div>
+            <div class="wl-swatch" style="background:#0b6e4f"></div>
+            <div class="wl-swatch" style="background:#7c3aed"></div>
+            <div class="wl-swatch" style="background:#b91c1c"></div>
+            <div class="wl-swatch" style="background:#92400e"></div>
+          </div>
+        </div>
+        <div class="wl-field">
+          <label>Agent name &amp; NMLS</label>
+          <input class="wl-input" type="text" value="Sarah Chen · NMLS #1234567" readonly/>
+        </div>
+        <div style="background:var(--blue-lt);border-radius:8px;padding:.75rem 1rem;margin-top:.5rem;font-size:.78rem;color:var(--blue);line-height:1.55">
+          ✓ Your logo, colors, and contact appear everywhere — matrix header, PDFs, and email footers
+        </div>
+      </div>
+      <div class="wl-preview">
+        <div class="wl-preview-header">
+          <div>
+            <div class="wl-preview-brand">Apex Home Lending</div>
+            <div class="wl-preview-tagline">Your trusted lending partner · Sarah Chen</div>
+          </div>
+          <div class="wl-badge">PRO</div>
+        </div>
+        <div class="wl-preview-body">
+          <div style="font-size:.7rem;font-weight:600;color:#8494a8;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem">Payment Matrix — $500,000</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.7rem">
+            <thead><tr>
+              <th style="background:#1a3a6e;color:rgba(255,255,255,.4);padding:.4rem;text-align:left;font-size:.58rem">Price \ Rate</th>
+              <th style="background:#1a3a6e;color:rgba(255,255,255,.6);padding:.4rem;text-align:center;font-size:.58rem">6.375%</th>
+              <th style="background:#1a3a6e;color:#7dddd0;padding:.4rem;text-align:center;font-size:.58rem">6.625%★</th>
+              <th style="background:#1a3a6e;color:rgba(255,255,255,.6);padding:.4rem;text-align:center;font-size:.58rem">6.875%</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td style="padding:.4rem;font-size:.65rem;color:#8494a8;background:#fafbfc;border:1px solid #dde3eb">$475k</td>
+                <td style="padding:.4rem;text-align:center;background:#e6f7ed;color:#1a7a40;border:1px solid #dde3eb;font-weight:600">$2,431</td>
+                <td style="padding:.4rem;text-align:center;background:#f0faf4;color:#2a7a4e;border:1px solid #dde3eb">$2,519</td>
+                <td style="padding:.4rem;text-align:center;background:#fdf5f5;color:#c04040;border:1px solid #dde3eb">$2,609</td>
+              </tr>
+              <tr>
+                <td style="padding:.4rem;font-size:.65rem;color:#8494a8;background:#fafbfc;border:1px solid #dde3eb">$500k★</td>
+                <td style="padding:.4rem;text-align:center;background:#f0faf4;color:#2a7a4e;border:1px solid #dde3eb">$2,561</td>
+                <td style="padding:.4rem;text-align:center;background:#e4f5f2;color:#09544a;border:2px solid #0b8f7a;font-weight:700">$2,561★</td>
+                <td style="padding:.4rem;text-align:center;background:#fdf5f5;color:#c04040;border:1px solid #dde3eb">$2,745</td>
+              </tr>
+              <tr>
+                <td style="padding:.4rem;font-size:.65rem;color:#8494a8;background:#fafbfc;border:1px solid #dde3eb">$525k</td>
+                <td style="padding:.4rem;text-align:center;background:#fdf5f5;color:#c04040;border:1px solid #dde3eb">$2,690</td>
+                <td style="padding:.4rem;text-align:center;background:#fdeaea;color:#bf3030;border:1px solid #dde3eb;font-weight:600">$2,788</td>
+                <td style="padding:.4rem;text-align:center;background:#fdeaea;color:#bf3030;border:1px solid #dde3eb;font-weight:600">$2,888</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size:.62rem;color:#8494a8;margin-top:.6rem;text-align:right">Apex Home Lending · Sarah Chen · NMLS #1234567</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+
+
+<!-- PDF SAMPLES -->
+<section style="padding:5rem 2rem;background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-eyebrow">See it for yourself</div>
+    <h2 class="section-heading" style="font-style:italic">What your clients actually receive</h2>
+    <p class="section-sub">Click either example to see a full-size sample PDF — exactly what a Pro subscriber's client sees, with real branding and no mention of LoanCheatSheet.com.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem">
+
+      <!-- Sample 1 -->
+      <a href="sample-pdf-pro-agent.html" target="_blank" style="text-decoration:none;display:block;border:2px solid var(--rule);border-radius:var(--radius-lg);overflow:hidden;transition:all .2s;box-shadow:var(--shadow-sm)" onmouseover="this.style.borderColor='var(--blue)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.borderColor='var(--rule)';this.style.boxShadow='var(--shadow-sm)'">
+        <!-- Mini preview header -->
+        <div style="background:#1c3a6e;padding:.85rem 1.1rem;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:.95rem;color:#fff">Apex Home Lending</div>
+            <div style="font-size:.6rem;color:rgba(255,255,255,.4);margin-top:1px">Sarah Chen · Loan Officer · NMLS #1234567</div>
+          </div>
+          <div style="background:rgba(255,255,255,.1);border-radius:5px;padding:.2rem .55rem;font-size:.58rem;font-weight:700;color:rgba(255,255,255,.6)">PDF</div>
+        </div>
+        <!-- Mini stats strip -->
+        <div style="display:flex;gap:0;border-bottom:1px solid var(--rule)">
+          <div style="flex:1;padding:.5rem .65rem;border-right:1px solid var(--rule);text-align:center"><div style="font-size:.55rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Price</div><div style="font-size:.78rem;font-weight:600;color:var(--ink2);margin-top:1px">$575,000</div></div>
+          <div style="flex:1;padding:.5rem .65rem;border-right:1px solid var(--rule);text-align:center"><div style="font-size:.55rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Rate</div><div style="font-size:.78rem;font-weight:600;color:var(--ink2);margin-top:1px">6.625%</div></div>
+          <div style="flex:1;padding:.5rem .65rem;background:#e4f5f2;text-align:center"><div style="font-size:.55rem;color:#0b8f7a;font-weight:600;text-transform:uppercase;letter-spacing:.06em">P&I / mo</div><div style="font-size:.78rem;font-weight:700;color:#0b8f7a;margin-top:1px">$2,946</div></div>
+        </div>
+        <!-- Mini matrix preview -->
+        <div style="padding:.75rem 1rem">
+          <div style="font-size:.58rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.4rem">Payment Matrix — excerpt</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.65rem">
+            <tr><td style="padding:.3rem .4rem;color:var(--muted);background:#fafbfc;border:1px solid var(--rule)">$550k</td><td style="padding:.3rem .4rem;text-align:center;background:#f0faf4;color:#2a7a4e;border:1px solid var(--rule)">$2,931</td><td style="padding:.3rem .4rem;text-align:center;background:#fdf5f5;color:#c04040;border:1px solid var(--rule)">$3,076</td></tr>
+            <tr><td style="padding:.3rem .4rem;color:var(--muted);background:#fafbfc;border:1px solid var(--rule)">$575k ★</td><td style="padding:.3rem .4rem;text-align:center;background:#e4f5f2;color:#09544a;border:2px solid #0b8f7a;font-weight:700">$2,946 ★</td><td style="padding:.3rem .4rem;text-align:center;background:#fdeaea;color:#bf3030;border:1px solid var(--rule)">$3,214</td></tr>
+          </table>
+        </div>
+        <div style="padding:.6rem 1rem;background:var(--bg);border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:.72rem;font-weight:600;color:var(--ink2)">Mortgage Lender PDF</div>
+            <div style="font-size:.62rem;color:var(--muted)">Loan officer branding · Payment matrix · Buydown analysis</div>
+          </div>
+          <div style="font-size:.72rem;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:.3rem">View sample →</div>
+        </div>
+      </a>
+
+      <!-- Sample 2 -->
+      <a href="sample-pdf-pro-realtor.html" target="_blank" style="text-decoration:none;display:block;border:2px solid var(--rule);border-radius:var(--radius-lg);overflow:hidden;transition:all .2s;box-shadow:var(--shadow-sm)" onmouseover="this.style.borderColor='var(--blue)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.borderColor='var(--rule)';this.style.boxShadow='var(--shadow-sm)'">
+        <!-- Mini preview header -->
+        <div style="background:#1a3a28;padding:.85rem 1.1rem;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:.95rem;color:#fff">Premier Realty Group</div>
+            <div style="font-size:.6rem;color:rgba(255,255,255,.4);margin-top:1px">Marcus L. Thompson · REALTOR® · DRE #02145893</div>
+          </div>
+          <div style="background:rgba(255,255,255,.1);border-radius:5px;padding:.2rem .55rem;font-size:.58rem;font-weight:700;color:rgba(255,255,255,.6)">PDF</div>
+        </div>
+        <!-- Accent strip -->
+        <div style="background:#c8973a;height:3px"></div>
+        <!-- Mini stats strip -->
+        <div style="display:flex;gap:0;border-bottom:1px solid var(--rule)">
+          <div style="flex:1;padding:.5rem .65rem;border-right:1px solid var(--rule);text-align:center"><div style="font-size:.55rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Price</div><div style="font-size:.78rem;font-weight:600;color:var(--ink2);margin-top:1px">$725,000</div></div>
+          <div style="flex:1;padding:.5rem .65rem;border-right:1px solid var(--rule);text-align:center"><div style="font-size:.55rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em">Rate</div><div style="font-size:.78rem;font-weight:600;color:var(--ink2);margin-top:1px">6.625%</div></div>
+          <div style="flex:1;padding:.5rem .65rem;background:#f0f8f2;text-align:center"><div style="font-size:.55rem;color:#1a5c30;font-weight:600;text-transform:uppercase;letter-spacing:.06em">P&I / mo</div><div style="font-size:.78rem;font-weight:700;color:#1a5c30;margin-top:1px">$3,714</div></div>
+        </div>
+        <!-- Mini matrix preview -->
+        <div style="padding:.75rem 1rem">
+          <div style="font-size:.58rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.4rem">Payment Matrix — excerpt</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.65rem">
+            <tr><td style="padding:.3rem .4rem;color:var(--muted);background:#fafbfc;border:1px solid var(--rule)">$700k</td><td style="padding:.3rem .4rem;text-align:center;background:#f0faf4;color:#2a7a4e;border:1px solid var(--rule)">$3,575</td><td style="padding:.3rem .4rem;text-align:center;background:#fdf5f5;color:#c04040;border:1px solid var(--rule)">$3,712</td></tr>
+            <tr><td style="padding:.3rem .4rem;color:var(--muted);background:#fafbfc;border:1px solid var(--rule)">$725k ★</td><td style="padding:.3rem .4rem;text-align:center;background:#fdf5e6;color:#7a4800;border:2px solid #c8973a;font-weight:700">$3,714 ★</td><td style="padding:.3rem .4rem;text-align:center;background:#fdeaea;color:#bf3030;border:1px solid var(--rule)">$3,845</td></tr>
+          </table>
+        </div>
+        <div style="padding:.6rem 1rem;background:var(--bg);border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:.72rem;font-weight:600;color:var(--ink2)">Real Estate Agent PDF</div>
+            <div style="font-size:.62rem;color:var(--muted)">Agent branding · Full matrix · Negotiation levers · Next steps</div>
+          </div>
+          <div style="font-size:.72rem;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:.3rem">View sample →</div>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center;margin-top:1.25rem;font-size:.78rem;color:var(--muted)">
+      Free users get the same data with LoanCheatSheet.com branding. <strong style="color:var(--ink2)">Pro removes it entirely and replaces it with yours.</strong>
+    </div>
+
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="section-eyebrow">What professionals say</div>
+    <h2 class="section-heading" style="font-style:italic">Built on real feedback</h2>
+    <p class="section-sub">These are placeholders — add real quotes from early users once you have them.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"I pull this up at every showing. Clients stop asking 'what does that mean for my payment?' because they can see all the scenarios right in front of them."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">JR</div>
+          <div><div class="testi-name">James R.</div><div class="testi-role">Realtor · Keller Williams</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"My clients used to take days to make a decision. Since I started sharing branded scenarios, that's down to hours. The negotiation tool alone is worth the subscription."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">ML</div>
+          <div><div class="testi-name">Maria L.</div><div class="testi-role">Loan Officer · Independent</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"We rolled this out to our whole team. Having everyone use the same branded tool makes us look like a much bigger operation than we are."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">DK</div>
+          <div><div class="testi-name">David K.</div><div class="testi-role">Branch Manager · Credit Union</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--bg)">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-heading" style="font-style:italic">Common questions</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I need technical skills to white-label this?
+          <span class="faq-chevron">›</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No developer needed. You fill out a simple form with your logo, brand color, and contact info — your branded version is ready in minutes.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can I embed it on my own website?
+          <span class="faq-chevron">›</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — Pro and Enterprise plans include an embeddable version you can drop into your existing website with a single line of code. Enterprise plans support custom domains.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What's the difference between Pro and Enterprise?
+          <span class="faq-chevron">›</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Pro is a single-user license at $20/month — perfect for individual agents and loan officers. Enterprise is for teams and organizations, with multi-seat access, volume pricing, and dedicated support. Contact us for Enterprise pricing.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is the free version really free? What's the catch?
+          <span class="faq-chevron">›</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, genuinely free with no time limit. The free version carries LoanCheatSheet.com branding and doesn't include white-labeling, PDF export, or shareable links. Everything else — all the calculators, the payment matrix, the negotiation tools — is fully accessible.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can I cancel my Pro subscription anytime?
+          <span class="faq-chevron">›</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — cancel anytime. If you're on a monthly plan you keep access through the end of the billing period. Annual plans are non-refundable but you keep access for the full year.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready to close more deals?</h2>
+  <p>Join agents and loan officers who use LoanCheatSheet.com to give every client total clarity before they sign.</p>
+  <div class="cta-btn-row">
+    <a href="plans.html" class="btn-hero-ghost">Try the Free Tool</a>
+    <a href="#pricing" class="btn-hero-primary">Get Pro for $20/mo →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom:.65rem;display:inline-flex">
+          <div class="nav-mark"><span></span><span></span><span></span><span></span><span class="active"></span><span></span><span></span><span></span><span></span></div>
+          <span class="nav-name" style="color:rgba(255,255,255,.6);margin-left:.65rem">LoanCheatSheet.com</span>
+        </a>
+        <p>The mortgage payment matrix built for professionals who want to close faster and communicate clearer.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="plans.html">Free Tool</a>
+        <a href="#pricing">Pro Plans</a>
+        <a href="#whitelabel">White-Label</a>
+        <a href="#features">Features</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 LoanCheatSheet.com · Not financial advice · Rates for illustration purposes only</p>
+      <p>Built for mortgage professionals</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open')});
+  if(!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
