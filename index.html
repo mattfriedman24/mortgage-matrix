@@ -3483,7 +3483,7 @@ function updateAmort(){
 // ── SHAREABLE URL ──────────────────────────────────────────────────────────
 function getShareURL(){var p=pm(priceInput.value)||500000,d=getDownDollars(p),t=document.getElementById('term').value||30;return window.location.origin+window.location.pathname+'#p='+p+'&d='+d+'&t='+t+'&m='+dpMode;}
 function copyShareURL(){var url=getShareURL(),btn=document.getElementById('share-btn');function ok(){if(btn){var o=btn.textContent;btn.textContent='Copied!';setTimeout(function(){btn.textContent=o;},1800);}}try{navigator.clipboard.writeText(url).then(ok);}catch(e){var x=document.createElement('textarea');x.value=url;document.body.appendChild(x);x.select();document.execCommand('copy');document.body.removeChild(x);ok();}}
-function loadFromURL(){var hash=window.location.hash;if(!hash||hash.length<4)return;var p={};hash.slice(1).split('&').forEach(function(s){var kv=s.split('=');if(kv.length===2)p[kv[0]]=kv[1];});if(p.p){var v=parseInt(p.p);slider.value=v;priceInput.value='$'+v.toLocaleString();document.getElementById('slider-display').textContent='$'+v.toLocaleString();setSliderFill(v);}if(p.m)setDpMode(p.m);if(p.d){if((p.m||dpMode)==='dollar')document.getElementById('down-dollar').value='$'+parseInt(p.d).toLocaleString();else document.getElementById('down-pct').value=p.d;}if(p.t)document.getElementById('term').value=p.t;}
+function loadFromURL(){var hash=window.location.hash;if(!hash||hash.length<4)return;var p={};hash.slice(1).split('&').forEach(function(s){var kv=s.split('=');if(kv.length===2)p[kv[0]]=kv[1];});if(p.p){var v=parseInt(p.p);slider.value=v;priceInput.value='$'+v.toLocaleString();document.getElementById('slider-display').textContent='$'+v.toLocaleString();setSliderFill(v);}if(p.m)setDpMode(p.m);if(p.d){if((p.m||dpMode)==='dollar')document.getElementById('down-dollar').value='$'+parseInt(p.d).toLocaleString();else document.getElementById('down-pct').value=p.d;}if(p.t)document.getElementById('term').value=p.t;updateAll();}
 
 // ── LIVE RATES ─────────────────────────────────────────────────────────────
 async function fetchLiveRates(){var CK='lcs_live_rates',TTL=7*24*3600*1000;try{var c=JSON.parse(localStorage.getItem(CK)||'null');if(c&&(Date.now()-c.ts)<TTL){applyRates(c.conf,c.jumbo,c.date);return;}}catch(e){}try{var resp=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent('https://fred.stlouisfed.org/graph/fredgraph.csv?id=MORTGAGE30US'),{signal:AbortSignal.timeout(5000)});if(!resp.ok)throw 0;var lines=(await resp.text()).trim().split('\n').filter(function(l){return l&&l[0]!=='D';});var last=lines[lines.length-1].split(',');var conf=parseFloat(last[1]);if(isNaN(conf))throw 0;var jumbo=Math.round((conf+0.25)*1000)/1000;localStorage.setItem(CK,JSON.stringify({conf:conf,jumbo:jumbo,date:last[0],ts:Date.now()}));applyRates(conf,jumbo,last[0]);}catch(e){console.log('Rates: using defaults');}}
@@ -3721,13 +3721,14 @@ function emailShareLink(e){
     'Monthly P&I: ' + fmt(pmt) + '\n\n' +
     'Open the full scenario here:\n' + url
   );
-  window.location.href = 'mailto:mfriedman1@gmail.com?subject=' + subject + '&body=' + body;
+  window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 setSliderFill(slider.value);
 document.getElementById('down-dollar').value=fmt(Math.round(500000*0.20));
-updateAll();
+loadFromURL();  // load URL params if present (calls updateAll internally)
+if(!window.location.hash||window.location.hash.length<4)updateAll();  // default init if no hash
 </script>
 </div>
 </body>
