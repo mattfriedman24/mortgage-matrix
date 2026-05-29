@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LoanCheatSheet.com</title>
+<title>LoanCheatSheet — Mortgage Payment Matrix Calculator</title>
+<meta name="description" content="See every mortgage payment scenario before you sign. The 5x5 payment matrix shows how your monthly payment changes across 5 price points and 5 interest rates. Free mortgage calculator with rate buydown, negotiation analyzer, and closing cost estimator."/>
+<meta name="keywords" content="mortgage calculator, mortgage payment matrix, loan calculator, rate buydown calculator, mortgage scenario calculator, home buying calculator, mortgage intelligence"/>
+<meta name="author" content="LoanCheatSheet.com"/>
+<link rel="canonical" href="https://www.loancheatsheet.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.loancheatsheet.com/"/>
+<meta property="og:title" content="LoanCheatSheet — Mortgage Payment Matrix Calculator"/>
+<meta property="og:description" content="See every mortgage payment scenario before you sign. Free 5x5 payment matrix, rate buydown, negotiation analyzer, and closing costs."/>
+<meta property="og:site_name" content="LoanCheatSheet.com"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="LoanCheatSheet — Mortgage Payment Matrix Calculator"/>
+<meta name="twitter:description" content="See every mortgage scenario before you sign. Free 5x5 payment matrix, rate buydown calculator, and deal tools."/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LoanCheatSheet Mortgage Calculator","url":"https://www.loancheatsheet.com","description":"Mortgage payment matrix calculator. Includes rate buydown calculator, negotiation analyzer, total cost analysis, and closing cost estimator.","applicationCategory":"FinanceApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -486,10 +499,10 @@ footer{text-align:center;padding:1.2rem;font-size:.66rem;color:var(--muted);bord
       <div style="font-family:'Instrument Serif',serif;font-size:1.9rem;font-style:italic;color:#fff;line-height:1.1;letter-spacing:-.02em">See the full picture before you sign.</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;flex-shrink:0">
-      <div style="font-size:.6rem;color:rgba(255,255,255,.55);letter-spacing:.04em">Rates as of <span id="rate-date-label">May 22, 2026</span> · <a href="https://www.freddiemac.com/pmms" target="_blank" style="color:#9eecd1;text-decoration:none">Freddie Mac PMMS</a></div>
+      <div style="font-size:.6rem;color:rgba(255,255,255,.55);letter-spacing:.04em">Rates as of <span id="rate-date-label">May 28, 2026</span> · <a href="https://www.freddiemac.com/pmms" target="_blank" style="color:#9eecd1;text-decoration:none">Freddie Mac PMMS</a></div>
       <div class="rate-badges" style="display:flex;gap:1px">
-        <div class="rate-badge"><div class="rb-label">Conforming 30-yr</div><div class="rb-val" id="conf-rate-badge">6.51%</div><div class="rb-sub">≤ $832,750</div></div>
-        <div class="rate-badge"><div class="rb-label">Jumbo 30-yr</div><div class="rb-val" id="jumbo-rate-badge">6.75%</div><div class="rb-sub">&gt; $832,750</div></div>
+        <div class="rate-badge"><div class="rb-label">Conforming 30-yr</div><div class="rb-val" id="conf-rate-badge">6.53%</div><div class="rb-sub">≤ $832,750</div></div>
+        <div class="rate-badge"><div class="rb-label">Jumbo 30-yr</div><div class="rb-val" id="jumbo-rate-badge">6.78%</div><div class="rb-sub">&gt; $832,750</div></div>
       </div>
     </div>
   </div>
@@ -1138,11 +1151,11 @@ footer{text-align:center;padding:1.2rem;font-size:.66rem;color:var(--muted);bord
       <a href="./plans.html" style="display:inline-flex;align-items:center;gap:.4rem;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:600;background:#1a56db;color:#fff;border:none;border-radius:6px;padding:.38rem .9rem;text-decoration:none;white-space:nowrap;flex-shrink:0">See Pro Plans →</a>
     </div>
   </div>
-<footer style="background:#0a2818;color:rgba(255,255,255,.3);font-size:.66rem;text-align:center;padding:1.1rem;letter-spacing:.02em">LoanCheatSheet.com &nbsp;·&nbsp; Freddie Mac PMMS · May 22, 2026 &nbsp;·&nbsp; Conforming limit $832,750 (2026 FHFA) &nbsp;·&nbsp; Not financial advice</footer>
+<footer style="background:#0a2818;color:rgba(255,255,255,.3);font-size:.66rem;text-align:center;padding:1.1rem;letter-spacing:.02em">LoanCheatSheet.com &nbsp;·&nbsp; Freddie Mac PMMS · May 28, 2026 &nbsp;·&nbsp; Conforming limit $832,750 (2026 FHFA) &nbsp;·&nbsp; Not financial advice</footer>
 
 <script>
 // ── CONSTANTS ─────────────────────────────────────────────────────────────
-let CONF_RATE=6.51,JUMBO_RATE=6.75,CONF_LIMIT=832750,STEP_RATE=0.125,STEP_PRICE=25000;
+let CONF_RATE=6.53,JUMBO_RATE=6.78,CONF_LIMIT=832750,STEP_RATE=0.125,STEP_PRICE=25000;
 let dpMode='dollar',activeTab='pi',advOpen=false,activeAdvTab='interest';
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
@@ -2399,9 +2412,9 @@ function updateDonut(bl,br,yr,bp){
 // ── RATE TREND CHART (native canvas) ─────────────────────────────────────
 function drawRateTrendChart(){
   try{
-    var labels=['Mar 5','Mar 12','Mar 19','Mar 26','Apr 2','Apr 9','Apr 16','Apr 23','Apr 30','May 7','May 14','May 21'];
-    var conf=[6.07,6.11,6.22,6.38,6.42,6.37,6.30,6.23,6.30,6.37,6.36,6.51];
-    var jumb=[6.32,6.35,6.45,6.60,6.65,6.60,6.52,6.48,6.52,6.60,6.59,6.75];
+    var labels=['Mar 12','Mar 19','Mar 26','Apr 2','Apr 9','Apr 16','Apr 23','Apr 30','May 7','May 14','May 21','May 28'];
+    var conf=[6.11,6.22,6.38,6.42,6.37,6.30,6.23,6.30,6.37,6.36,6.51,6.53];
+    var jumb=[6.35,6.45,6.60,6.65,6.60,6.52,6.48,6.52,6.60,6.59,6.75,6.78];
     var cv=document.getElementById('rateTrendChart');
     if(!cv)return;
     cv.width=cv.offsetWidth||600;
