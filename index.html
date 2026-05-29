@@ -106,19 +106,19 @@ td.c-nhigh{background:var(--red-lt-bg);color:var(--red-lt)}
 .buydown-inputs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.8rem}
 .bd-inp-group{display:flex;flex-direction:column;gap:3px}
 .bd-inp-group label{font-size:.72rem;font-weight:500;color:#4a6080;text-transform:uppercase;letter-spacing:.05em}
-.bd-inp-group input{font-family:'Outfit',sans-serif;font-size:.88rem;color:var(--text);background:#fff;border:1px solid #d8eee0;border-radius:6px;padding:.42rem .65rem;width:100%;outline:none}
-.bd-inp-group input:focus{border-color:#0f763c}
+.bd-inp-group input{font-family:'Outfit',sans-serif;font-size:.88rem;color:var(--text);background:#fff;border:1px solid #c8d4e8;border-radius:6px;padding:.42rem .65rem;width:100%;outline:none}
+.bd-inp-group input:focus{border-color:#4a7aaa}
 .bd-results{display:flex;flex-direction:column;gap:.45rem}
-.bd-result-row{display:flex;justify-content:space-between;align-items:baseline;padding:.48rem .65rem;background:#fff;border-radius:7px;border:1px solid #d8eee0}
+.bd-result-row{display:flex;justify-content:space-between;align-items:baseline;padding:.48rem .65rem;background:#fff;border-radius:7px;border:1px solid #c8d4e8}
 .bd-result-label{font-size:.72rem;color:var(--muted)}
 .bd-result-val{font-size:.9rem;font-weight:500;color:var(--text)}
 .bd-result-val.green{color:var(--green)}
 .bd-result-val.navy{color:var(--navy)}
 .bd-result-val.red{color:var(--red)}
-.bd-result-row.featured{background:#f0faf4;border-color:#a8d8b8}
-.bd-result-row.featured .bd-result-label{color:#3a6050;font-weight:500}
-.bd-result-row.featured .bd-result-val{font-size:1rem;color:#0a1f10}
-.bd-verdict{margin-top:.65rem;font-size:.75rem;color:var(--navy);line-height:1.5;padding:.55rem .85rem;background:#f0faf4;border:1.5px solid #0f763c;border-left:4px solid #0f763c;border-radius:8px;display:flex;align-items:center;gap:.55rem}
+.bd-result-row.featured{background:linear-gradient(135deg,#e8f0fc,#f0f5ff);border-color:#8aaad8}
+.bd-result-row.featured .bd-result-label{color:#2a4a6a;font-weight:500}
+.bd-result-row.featured .bd-result-val{font-size:1rem;color:#0f1f3d}
+.bd-verdict{margin-top:.65rem;font-size:.75rem;color:#1e3a5a;line-height:1.55;padding:.55rem .7rem;background:rgba(28,80,160,.07);border-radius:7px;border-left:3px solid #4a7aaa}
 
 /* ── ADVANCED SECTION ── */
 .advanced-toggle-bar{display:flex;align-items:center;gap:.75rem;padding:.72rem 1.1rem;background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);margin-top:.85rem;box-shadow:var(--shadow);cursor:pointer;user-select:none}
@@ -677,6 +677,11 @@ footer{text-align:center;padding:1.2rem;font-size:.66rem;color:var(--muted);bord
     </div>
     <div class="buydown-panel">
       <div class="buydown-title">◈ Rate Buydown Calculator</div>
+      <!-- Explainer -->
+      <div style="background:#f0faf4;border:1px solid #c8e8d0;border-radius:7px;padding:.5rem .85rem;margin-bottom:.75rem;font-size:.74rem;color:#3a6050;line-height:1.55;text-align:center">
+        <strong>1 point = 1% of your loan amount</strong> &nbsp;·&nbsp; Typically buys down your rate by <strong>0.25%</strong><br/>
+        <span style="font-size:.66rem;color:#5a8a6a">e.g. on a $400k loan, 1 point costs $4,000 and reduces your rate from 6.51% → 6.26%</span>
+      </div>
       <div class="buydown-inputs">
         <div class="bd-inp-group">
           <label>Points to buy</label>
@@ -1185,9 +1190,7 @@ function updateBuydown(){
   const pts=pf(document.getElementById('bd-points').value)||1,rr=pf(document.getElementById('bd-rate-reduce').value)||0.25;
   const cost=bl*(pts/100),nr=Math.max(0.1,br-pts*rr),op=mPI(bl,br,yr),np=mPI(bl,nr,yr),save=op-np;
   const beMo=save>0?cost/save:Infinity,beYr=beMo/12,lifeSave=save*yr*12-cost;
-  let verdictBadge=beYr<=3?'<span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0f763c;background:#e8f5ee;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0">★ Excellent</span>':beYr<=5?'<span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0f763c;background:#e8f5ee;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0">✓ Good</span>':beYr<=7?'<span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0f763c;background:#e8f5ee;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0">⚖ Borderline</span>':'<span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#991b1b;background:#fef2f2;border-radius:4px;padding:2px 8px;white-space:nowrap;flex-shrink:0">⚠ Risky</span>';
-  let verdictText=beYr<=3?`Break-even in ${beYr.toFixed(1)} yrs — strong buy if staying long-term.`:beYr<=5?`${beYr.toFixed(1)}-yr break-even — good if staying 5+ years. Most homeowners stay ~7–10 yrs.`:beYr<=7?`${beYr.toFixed(1)}-yr break-even — only worth it if you won't move or refi before then.`:`${beYr.toFixed(1)}-yr break-even — consider using that cash for a larger down payment instead.`;
-  let verdict=verdictBadge+'<span>'+verdictText+'</span>';
+  let verdict=beYr<=3?`✅ <strong>Excellent.</strong> Break-even under 3 years — strong buy if staying long-term.`:beYr<=5?`👍 <strong>Good</strong> if you plan to stay 5+ years. Most homeowners stay ~7–10 years.`:beYr<=7?`⚖️ <strong>Borderline.</strong> ${beYr.toFixed(1)}-yr break-even. Only worth it if you won't move or refi before then.`:`⚠️ <strong>Risky.</strong> ${beYr.toFixed(1)}-yr break-even. Consider using that cash for a larger down payment instead.`;
   document.getElementById('bd-results').innerHTML=`
     <!-- Cost + rate change summary -->
     <div style="background:#f0faf4;border:1px solid #c8e8d0;border-radius:7px;padding:.55rem .85rem;margin-bottom:.65rem;font-size:.78rem;color:#3a6050;display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap">
@@ -1999,7 +2002,8 @@ function generatePDF(){
   const sfmt=v=>v>0?'+'+fmt(v):v<0?'('+fmt(-v)+')':'$0';
   const pfmt=v=>v<0?'('+fmt(-v)+')':fmt(v);
 
-  const _pdfHtml=`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+  const w=window.open('','_blank','width=900,height=700');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
   <title>${savedName||'Mortgage Scenario'} — ${today}</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet"/>
   <style>
@@ -2155,14 +2159,10 @@ function generatePDF(){
     Principal &amp; interest only — excludes property taxes, homeowners insurance, PMI, and HOA. Rates as of ${today} and are illustrative only. Conforming loan limit: $832,750 (2026 FHFA). LoanCheatSheet.com is not a lender and this is not financial advice. Always verify rates and terms with a licensed mortgage professional.
   </div>
   </body></html>`);
-  // iOS-safe: build blob URL and open/navigate
-  const _blob = new Blob([_pdfHtml], {type:'text/html'});
-  const _url  = URL.createObjectURL(_blob);
-  const _win  = window.open(_url, '_blank');
-  if(!_win || _win.closed || typeof _win.closed==='undefined'){
-    // Popup blocked (iOS Safari) — navigate current tab
-    window.location.href = _url;
-  }
+  w.document.close();
+  w.focus();
+  // Wait for fonts/styles to load before auto-print
+  setTimeout(function(){ w.focus(); }, 800);
 }
 
 function updateCredit(){
@@ -3730,8 +3730,8 @@ function emailShareLink(e){
 // ── INIT ──────────────────────────────────────────────────────────────────
 setSliderFill(slider.value);
 document.getElementById('down-dollar').value=fmt(Math.round(500000*0.20));
-loadFromURL();  // load URL params if present (calls updateAll internally)
-if(!window.location.hash||window.location.hash.length<4)updateAll();  // default init if no hash
+loadFromURL();
+if(!window.location.hash||window.location.hash.length<4)updateAll();
 </script>
 </div>
 </body>
