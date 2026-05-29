@@ -2509,12 +2509,29 @@ function submitContact(){
   var status=document.getElementById('contact-status');
   if(!name||!email||!msg){status.style.color='#b02020';status.textContent='Please fill in all fields.';return;}
   if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){status.style.color='#b02020';status.textContent='Please enter a valid email.';return;}
-  // In production this would POST to a backend; for now show confirmation
-  status.style.color='var(--green)';
-  status.textContent='\u2705 Thanks, '+name+'! We\'ll be in touch at '+email+'.';
-  document.getElementById('contact-name').value='';
-  document.getElementById('contact-email').value='';
-  document.getElementById('contact-message').value='';
+  status.textContent='Sending...';
+  fetch('https://formspree.io/f/xdajbjkn',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:name,email:email,message:msg})
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if(data.ok){
+      status.style.color='var(--green)';
+      status.textContent='\u2705 Thanks, '+name+'! We\'ll be in touch at '+email+'.';
+      document.getElementById('contact-name').value='';
+      document.getElementById('contact-email').value='';
+      document.getElementById('contact-message').value='';
+    } else {
+      status.style.color='#b02020';
+      status.textContent='Something went wrong. Please email mfriedman1@gmail.com directly.';
+    }
+  })
+  .catch(function(){
+    status.style.color='#b02020';
+    status.textContent='Could not send. Please email mfriedman1@gmail.com directly.';
+  });
 }
 
 
