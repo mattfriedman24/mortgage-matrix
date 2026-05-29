@@ -1999,8 +1999,7 @@ function generatePDF(){
   const sfmt=v=>v>0?'+'+fmt(v):v<0?'('+fmt(-v)+')':'$0';
   const pfmt=v=>v<0?'('+fmt(-v)+')':fmt(v);
 
-  const w=window.open('','_blank','width=900,height=700');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+  const _pdfHtml=`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
   <title>${savedName||'Mortgage Scenario'} — ${today}</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet"/>
   <style>
@@ -2156,10 +2155,14 @@ function generatePDF(){
     Principal &amp; interest only — excludes property taxes, homeowners insurance, PMI, and HOA. Rates as of ${today} and are illustrative only. Conforming loan limit: $832,750 (2026 FHFA). LoanCheatSheet.com is not a lender and this is not financial advice. Always verify rates and terms with a licensed mortgage professional.
   </div>
   </body></html>`);
-  w.document.close();
-  w.focus();
-  // Wait for fonts/styles to load before auto-print
-  setTimeout(function(){ w.focus(); }, 800);
+  // iOS-safe: build blob URL and open/navigate
+  const _blob = new Blob([_pdfHtml], {type:'text/html'});
+  const _url  = URL.createObjectURL(_blob);
+  const _win  = window.open(_url, '_blank');
+  if(!_win || _win.closed || typeof _win.closed==='undefined'){
+    // Popup blocked (iOS Safari) — navigate current tab
+    window.location.href = _url;
+  }
 }
 
 function updateCredit(){
