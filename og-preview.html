@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1200px;height:630px;overflow:hidden;background:#0d2a1a;font-family:'Barlow Condensed',sans-serif}
+
+.wrap{width:1200px;height:630px;background:linear-gradient(145deg,#0d2a1a 0%,#155230 100%);display:flex;align-items:center;padding:52px 64px;gap:72px;position:relative;overflow:hidden}
+
+/* watermark grid */
+.wrap::before{content:'';position:absolute;right:-30px;top:-40px;width:420px;height:420px;opacity:.04;background-image:
+  repeating-linear-gradient(0deg,#4ade80 0,#4ade80 1px,transparent 1px,transparent 40px),
+  repeating-linear-gradient(90deg,#4ade80 0,#4ade80 1px,transparent 1px,transparent 40px);background-size:40px 40px}
+
+/* left column */
+.left{display:flex;flex-direction:column;gap:0;flex-shrink:0;width:430px}
+.logo-row{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+.logo-wordmark{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-.025em;text-transform:uppercase;line-height:1}
+.logo-wordmark span{color:#4ade80;font-weight:600}
+.logo-tag{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.12em;margin-top:3px}
+
+.eyebrow{font-family:'DM Mono',monospace;font-size:.7rem;font-weight:400;color:#4ade80;text-transform:uppercase;letter-spacing:.16em;margin-bottom:16px}
+.headline{font-size:3.6rem;font-weight:900;color:#fff;line-height:.92;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:22px}
+.headline em{font-style:normal;color:#4ade80}
+.sub{font-family:'DM Mono',monospace;font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:32px;max-width:360px;letter-spacing:.02em}
+
+.badges{display:flex;gap:2px}
+.badge{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.4);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:.3rem .75rem;text-transform:uppercase;letter-spacing:.08em}
+
+/* right column — matrix */
+.matrix-wrap{flex:1;display:flex;flex-direction:column;gap:2px}
+.matrix-label{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+table{width:100%;border-collapse:collapse}
+th{font-family:'DM Mono',monospace;font-size:.65rem;font-weight:400;text-align:center;padding:.48rem .4rem;color:rgba(255,255,255,.5);background:#0a1f10;letter-spacing:.04em;border-right:1px solid rgba(255,255,255,.06)}
+th.star{color:#4ade80;font-weight:500}
+th:last-child{border-right:none}
+th.rh{text-align:left;padding-left:.65rem}
+td{font-family:'DM Mono',monospace;font-size:.78rem;text-align:center;padding:.42rem .4rem;border:1px solid rgba(255,255,255,.05);font-weight:400}
+td.rh{text-align:left;padding-left:.65rem;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:rgba(255,255,255,.4);background:#0a1f10;border-right:1.5px solid rgba(255,255,255,.08)}
+td.g2{background:#052e14;color:#4ade80}
+td.g1{background:#061f0e;color:#34c76a}
+td.r1{background:#2a0808;color:#f87171}
+td.r2{background:#3a0a0a;color:#ef4444}
+td.star{background:#0a2818;border:2px solid #1a5c38!important;color:#fff;font-weight:600}
+td.rh.star-row{color:#fff;font-weight:800}
+
+/* url bar at bottom */
+.url{position:absolute;bottom:28px;left:64px;font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.2);letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="logo-row">
+      <svg width="38" height="38" viewBox="0 0 34 34">
+        <line x1="5" y1="5" x2="29" y2="5" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <line x1="5" y1="17" x2="29" y2="17" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <line x1="5" y1="29" x2="29" y2="29" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <line x1="5" y1="5" x2="5" y2="29" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <line x1="17" y1="5" x2="17" y2="29" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <line x1="29" y1="5" x2="29" y2="29" stroke="#1a5c38" stroke-width=".8" opacity=".4"/>
+        <circle cx="5"  cy="5"  r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="17" cy="5"  r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="29" cy="5"  r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="5"  cy="17" r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="29" cy="17" r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="5"  cy="29" r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="17" cy="29" r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="29" cy="29" r="2.5" fill="#4ade80" opacity=".6"/>
+        <circle cx="17" cy="17" r="5.5" fill="#4ade80"/>
+        <circle cx="17" cy="17" r="2.5" fill="#0d2a1a"/>
+      </svg>
+      <div>
+        <div class="logo-wordmark">LoanCheatSheet<span>.com</span></div>
+        <div class="logo-tag">Mortgage Intelligence</div>
+      </div>
+    </div>
+
+    <div class="eyebrow">// Free mortgage calculator</div>
+    <div class="headline">See every<br/>scenario.<br/><em>Before you sign.</em></div>
+    <div class="sub">Every rate × every price — mapped in one table before you make an offer.</div>
+    <div class="badges">
+      <div class="badge">5×5 Matrix</div>
+      <div class="badge">Rate Buydown</div>
+      <div class="badge">Deal Tools</div>
+      <div class="badge">Free</div>
+    </div>
+  </div>
+
+  <!-- RIGHT — matrix -->
+  <div class="matrix-wrap">
+    <div class="matrix-label">// Monthly P&I payment matrix · ★ your scenario</div>
+    <table>
+      <thead>
+        <tr>
+          <th class="rh">Price / Rate</th>
+          <th>6.375%</th>
+          <th>6.500%</th>
+          <th class="star">6.625% ★</th>
+          <th>6.750%</th>
+          <th>6.875%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rh">$450k</td>
+          <td class="g2">$2,302</td>
+          <td class="g2">$2,344</td>
+          <td class="g1">$2,387</td>
+          <td class="r1">$2,430</td>
+          <td class="r2">$2,473</td>
+        </tr>
+        <tr>
+          <td class="rh">$475k</td>
+          <td class="g2">$2,431</td>
+          <td class="g1">$2,475</td>
+          <td class="g1">$2,519</td>
+          <td class="r1">$2,564</td>
+          <td class="r2">$2,609</td>
+        </tr>
+        <tr>
+          <td class="rh star-row">$500k ★</td>
+          <td class="g2">$2,561</td>
+          <td class="g1">$2,607</td>
+          <td class="star">$2,653 ★</td>
+          <td class="r1">$2,698</td>
+          <td class="r2">$2,745</td>
+        </tr>
+        <tr>
+          <td class="rh">$525k</td>
+          <td class="r1">$2,690</td>
+          <td class="r1">$2,739</td>
+          <td class="r1">$2,788</td>
+          <td class="r2">$2,838</td>
+          <td class="r2">$2,888</td>
+        </tr>
+        <tr>
+          <td class="rh">$550k</td>
+          <td class="r1">$2,820</td>
+          <td class="r2">$2,870</td>
+          <td class="r2">$2,922</td>
+          <td class="r2">$2,974</td>
+          <td class="r2">$3,026</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="url">loancheatsheet.com</div>
+</div>
+</body>
+</html>
