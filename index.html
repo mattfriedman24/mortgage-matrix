@@ -63,6 +63,7 @@ main{max-width:960px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;outline:none;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.22);cursor:pointer}
 input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;cursor:pointer}
 .slider-ticks{display:flex;justify-content:space-between;font-size:.62rem;color:var(--muted);margin-top:3px}
 .dp-toggle{display:flex;gap:.35rem;margin-bottom:.45rem}
 .dp-btn{font-family:'Barlow',sans-serif;font-size:.7rem;font-weight:500;border:1px solid var(--border);background:var(--bg);color:var(--muted);border-radius:6px;padding:.28rem .65rem;cursor:pointer;transition:all .15s}
@@ -935,9 +936,27 @@ footer{text-align:center;padding:1.2rem;font-size:.66rem;color:var(--muted);bord
         </div>
       </div>
 
+      <!-- EXTRA PAYMENT SLIDER -->
+      <div class="slider-section" id="ep-slider-wrap" style="margin-bottom:1rem;background:var(--surface);border:1px solid var(--border);padding:.9rem 1.1rem">
+        <div class="slider-header">
+          <span class="slider-lbl">Extra Monthly Payment</span>
+          <span class="slider-val" id="ep-slider-display"></span>
+        </div>
+        <div id="ep-payment-sum" style="display:none;font-family:'DM Mono',monospace;font-size:.82rem;color:var(--muted);margin-bottom:.45rem;text-align:right;letter-spacing:.02em"></div>
+        <input type="range" id="ep-slider" min="0" max="1000" step="50" value="0" oninput="onEpSlider(this.value)" style="margin-bottom:4px"/>
+        <div class="slider-ticks" id="ep-tick-row" style="display:flex">
+          <span></span>
+          <span id="ep-tick-25"></span>
+          <span id="ep-tick-50"></span>
+          <span id="ep-tick-75"></span>
+          <span id="ep-tick-max"></span>
+        </div>
+
+      </div>
+
       <!-- Extra payment inputs (monthly mode only) -->
       <div id="extra-inputs-box" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1rem">
-        <div class="inp-group"><label>Extra monthly payment ($)</label><input type="text" id="extra-pmt" oninput="updateExtraPayment()" placeholder="e.g. $300"/></div>
+        <div class="inp-group"><label>Extra monthly payment ($)</label><input type="text" id="extra-pmt" oninput="onExtraPmtInput(this)" placeholder="e.g. $300"/></div>
         <div class="inp-group"><label>One-time lump sum ($)</label><input type="text" id="extra-lump" value="$0" oninput="updateExtraPayment()"/></div>
         <div class="inp-group"><label>Apply lump sum in year</label><input type="text" id="extra-lump-yr" value="1" oninput="updateExtraPayment()"/></div>
       </div>
@@ -1768,7 +1787,7 @@ function updateAll(){
   if(tcaOpen)updateTCA(); else{ var tp=document.getElementById("tca-price"); if(tp) tp.value=fmt(pm(priceInput.value)||500000); }
   if(amortOpen)updateAmort();
   if(activeAdvTab==='closing')updateClosing();
-  if(extraOpen)updateExtraPayment();
+  if(extraOpen){updateExtraPayment();setTimeout(function(){initEpSlider();},30);}
   if(capitalOpen)updateAllocator();
   if(dealOpen)updateDeal();
   if(rvbOpen)updateRvB();
@@ -3446,8 +3465,7 @@ function updateExtraPayment(){
   // Default extra: if monthly mode, auto-fill 10% of payment; if biweekly, keep $0
   var extraEl = document.getElementById('extra-pmt');
   if(!isBiweekly && (!extraEl.value || extraEl.value==='$0')){
-    var def = Math.round(pmt * 0.10 / 100) * 100;
-    extraEl.value = fmt(def);
+    extraEl.value = '$100';
   }
   // In biweekly mode, extra amount is always $0
   if(isBiweekly){ extraEl.value = '$0'; }
@@ -3564,13 +3582,123 @@ function updateExtraPayment(){
 }
 
 
+
+// ── EXTRA PAYMENT SLIDER ─────────────────────────────────────────────────
+function onExtraPmtInput(el){
+  var bp=pm(priceInput.value)||500000,dn=getDownDollars(bp),bl=Math.max(0,bp-dn);
+  var br=getBaseRate(bl),yr=parseInt(document.getElementById('term').value)||30;
+  var pmt=mPI(bl,br,yr);
+  var cap=Math.round(pmt*0.25/25)*25;
+  var val=pm(el.value)||0;
+  if(val>cap){el.value=fmt(cap);}
+  var sl=document.getElementById('ep-slider');
+  if(sl){sl.value=Math.min(pm(el.value)||0,cap);updateEpSliderDisplay(sl.value,pmt,cap);}
+  updateExtraPayment();
+}
+
+function initEpSlider(){
+  var bp=pm(priceInput.value)||500000,dn=getDownDollars(bp),bl=Math.max(0,bp-dn);
+  var br=getBaseRate(bl),yr=parseInt(document.getElementById('term').value)||30;
+  var pmt=mPI(bl,br,yr);
+  // Cap = 50% of monthly payment, rounded to nearest $100, max $5,000
+  var cap=Math.round(pmt*0.25/25)*25;
+  var sl=document.getElementById('ep-slider');
+  if(!sl)return;
+  sl.max=cap;
+  sl.step=cap>=1000?50:25;
+  // Update tick labels
+  var ticks=[0.25,0.50,0.75,1.0];
+  ['ep-tick-25','ep-tick-50','ep-tick-75','ep-tick-max'].forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(el)el.textContent=fmt(Math.round(cap*ticks[i]/sl.step)*sl.step);
+  });
+  // Default to $100 if not set
+  var extraEl2=document.getElementById('extra-pmt');
+  if(!extraEl2.value||extraEl2.value==='$0'||pm(extraEl2.value)===0)extraEl2.value='$100';
+  var curExtra=Math.min(pm(extraEl2.value)||100,cap);
+  sl.value=curExtra;
+  if(pm(extraEl2.value)>cap)extraEl2.value=fmt(cap);
+  // Set fill directly from slider state
+  var pct2=sl.max>0?((sl.value-sl.min)/(sl.max-sl.min))*100:0;
+  sl.style.background='linear-gradient(to right,#1a5c38 '+pct2+'%,var(--border) '+pct2+'%)';
+  updateEpSliderDisplay(sl.value,pmt,cap);
+}
+
+function onEpSlider(val){
+  val=parseInt(val);
+  var bp=pm(priceInput.value)||500000,dn=getDownDollars(bp),bl=Math.max(0,bp-dn);
+  var br=getBaseRate(bl),yr=parseInt(document.getElementById('term').value)||30;
+  var pmt=mPI(bl,br,yr),cap=Math.min(5000,Math.ceil(pmt*0.50/100)*100);
+  // Update the text input
+  var extEl=document.getElementById('extra-pmt');
+  if(extEl)extEl.value=val>0?fmt(val):'$0';
+  updateEpSliderDisplay(val,pmt,cap);
+  // Full recalculate for chart
+  updateExtraPayment();
+}
+
+function updateEpSliderDisplay(val,pmt,cap){
+  val=parseInt(val)||0;
+  var sl=document.getElementById('ep-slider');
+  if(sl){
+    // Read directly from slider's own value/max — guaranteed to match thumb
+    var pct=sl.max>0?((sl.value-sl.min)/(sl.max-sl.min))*100:0;
+    sl.style.background='linear-gradient(to right,#1a5c38 '+pct+'%,var(--border) '+pct+'%)';
+  }
+  var disp=document.getElementById('ep-slider-display');
+  if(disp)disp.textContent=val>0?fmt(val):'';
+  var sumEl=document.getElementById('ep-payment-sum');
+  if(sumEl){
+    if(val>0&&pmt>0){
+      sumEl.style.display='block';
+      sumEl.innerHTML=fmt(pmt)+' <span style="color:var(--muted)">+</span> '+fmt(val)+' = <strong style="color:var(--blue)">'+fmt(pmt+val)+'</strong> /mo';
+    } else {
+      sumEl.style.display='none';
+    }
+  }
+}
+
+function updateEpImpactTiles(bl,br,yr,pmt,extra){
+  var impRow=document.getElementById('ep-impact-row');
+  if(!impRow)return;
+  if(extra<=0){impRow.style.display='none';return;}
+  impRow.style.display='grid';
+  // Quick amortize
+  function qAmort(ex){
+    var bal=bl,mo=0,interest=0;
+    while(bal>0&&mo<yr*12){
+      var ii=bal*br/100/12;interest+=ii;
+      var payment=Math.min(pmt+ex,bal+ii);
+      bal=Math.max(0,bal-(payment-ii));mo++;
+    }
+    return{months:mo,interest:interest};
+  }
+  var std=qAmort(0),withEx=qAmort(extra);
+  var moSaved=std.months-withEx.months;
+  var intSaved=std.interest-withEx.interest;
+  var newYrs=(withEx.months/12).toFixed(1);
+  var elInt=document.getElementById('ep-int-saved');
+  var elMo=document.getElementById('ep-mo-saved');
+  var elPayoff=document.getElementById('ep-new-payoff');
+  if(elInt)elInt.textContent=intSaved>0?fmt(intSaved):'$0';
+  if(elMo)elMo.textContent=moSaved>0?Math.round(moSaved)+' mo':'—';
+  if(elPayoff)elPayoff.textContent=newYrs+' yrs';
+}
+
 // ── EXTRA PAYMENT TOGGLE ──────────────────────────────────────────────────
 let extraOpen = false;
 function toggleExtraPayment(){
   extraOpen = !extraOpen;
   document.getElementById('extra-chk').checked = extraOpen;
   document.getElementById('extra-panel').classList.toggle('open', extraOpen);
-  if(extraOpen) updateExtraPayment();
+  if(extraOpen){
+    // Pre-set $100 before first render
+    var el=document.getElementById('extra-pmt');
+    if(el&&(!el.value||el.value==='$0'||pm(el.value)===0))el.value='$100';
+    updateExtraPayment();
+    // Wait one frame so panel is rendered and offsetWidth is valid
+    setTimeout(function(){ initEpSlider(); }, 30);
+  }
 }
 
 
@@ -3732,7 +3860,10 @@ function setPayMode(mode){
   // Show/hide extra inputs based on mode
   var inputsBox = document.getElementById('extra-inputs-box');
   if(inputsBox) inputsBox.style.display = mode==='biweekly' ? 'none' : 'grid';
+  var epWrap = document.getElementById('ep-slider-wrap');
+  if(epWrap) epWrap.style.display = mode==='biweekly' ? 'none' : '';
   updateExtraPayment();
+  if(mode==='monthly') initEpSlider();
 }
 
 
@@ -3953,6 +4084,8 @@ setSliderFill(slider.value);
 document.getElementById('down-dollar').value=fmt(Math.round(500000*0.20));
 loadFromURL();
 if(!window.location.hash||window.location.hash.length<4)updateAll();
+// Pre-initialize extra payment slider cap for $500k default
+requestAnimationFrame(function(){var el=document.getElementById('extra-pmt');if(el&&!el.value)el.value='$100';initEpSlider();});
 </script>
 </div>
 </body>
