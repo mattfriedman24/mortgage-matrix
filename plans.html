@@ -176,16 +176,81 @@ footer{background:var(--navy);padding:1.5rem 2rem;display:flex;align-items:cente
 .ft-copy{font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.18);width:100%;text-align:center;letter-spacing:.04em}
 
 @media(max-width:700px){
+  /* NAV */
   nav{flex-wrap:wrap;height:auto;padding:.65rem 1rem}
   .nav-links{display:none}
-  .pricing-grid,.why-grid{grid-template-columns:1fr}
+
+  /* HERO */
+  .hero{padding:1.75rem 1.25rem 1.5rem}
+  .hero-h1{font-size:1.7rem}
+  .hero-sub{font-size:.8rem}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:.5rem}
+  .hero-btns a{text-align:center}
+
+  /* USED BY BAR */
+  .used-bar{padding:.65rem 1rem}
+  .used-label{display:none}
+  .used-pills{flex-wrap:wrap}
+  .used-pill{padding:.25rem .65rem;border-bottom:1px solid var(--border)}
+  .used-pill-title{font-size:.7rem}
+  .used-pill-sub{display:none}
+
+  /* SECTIONS */
+  .sec{padding:1.75rem 1.25rem}
+  .sec-h2{font-size:1.6rem}
+  .why-grid,.pricing-grid{grid-template-columns:1fr}
   .benefits-inner{grid-template-columns:1fr}
   .plan.featured{order:-1}
-  .pdf-hero{flex-direction:column;text-align:center;gap:.85rem}
-  .pdf-doc-label{text-align:center}
+  .ben-col-title{font-size:1.05rem}
+
+  /* PDF SHOWCASE */
+  .pdf-showcase{margin:0 -1.25rem}
+  .pdf-hero{flex-direction:column;gap:.85rem;padding:1.25rem 1.1rem;align-items:flex-start}
+  .pdf-avatar{width:56px;height:56px}
+  .pdf-agent-name{font-size:.95rem}
+  .pdf-agent-contact{flex-wrap:wrap;gap:.4rem .7rem}
+  .pdf-doc-label{display:none}
+
+  /* STATS — 2 columns */
   .pdf-stats{grid-template-columns:1fr 1fr}
+  .pdf-stat{padding:.45rem .55rem}
+  .pdf-stat-val{font-size:.78rem}
+  .pdf-stat-lbl{font-size:.44rem}
+
+  /* MATRIX — scroll horizontally */
+  .pdf-body{padding:.9rem 1rem}
+  .pdf-matrix-title{font-size:.5rem}
+  .pdf-matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -1rem;padding:0 1rem}
+  .pdf-matrix{font-size:.62rem;min-width:340px}
+  .pdf-matrix th{font-size:.56rem;padding:.35rem .28rem}
+  .pdf-matrix td{font-size:.65rem;padding:.35rem .28rem}
+
+  /* LENDER RATE SHEET */
+  .pdf-rates-header{flex-direction:column;gap:.2rem;align-items:flex-start;padding:.45rem .7rem}
+  .pdf-rates-lender{font-size:.68rem}
   .pdf-rate-grid{grid-template-columns:1fr 1fr}
-  .hero-h1{font-size:1.9rem}
+  .pdf-rate-cell:last-child{grid-column:1/-1;border-right:none;border-top:1px solid var(--border)}
+
+  /* SENSITIVITY TABLE */
+  .pdf-sens{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -1rem;padding:.9rem 1rem 0}
+  .pdf-sens-table{font-size:.6rem;min-width:300px}
+  .pdf-sens-table th,.pdf-sens-table td{padding:.32rem .45rem;font-size:.58rem}
+
+  /* BUYDOWN AD */
+  .pdf-buydown-ad{margin:1rem -1rem -.25rem!important;flex-direction:column;align-items:flex-start;gap:.65rem;padding:.85rem 1rem}
+  .pdf-buydown-text{font-size:.82rem}
+  .pdf-buydown-btn{width:100%;text-align:center}
+
+  /* CTA BAND */
+  .cta-band{padding:1.75rem 1.25rem}
+  .cta-band-h{font-size:1.6rem}
+}
+
+@media(max-width:420px){
+  .hero-h1{font-size:1.45rem}
+  .sec-h2{font-size:1.35rem}
+  .pdf-matrix{font-size:.58rem}
+  .pdf-stat-val{font-size:.7rem}
 }
 </style>
 </head>
@@ -424,7 +489,7 @@ footer{background:var(--navy);padding:1.5rem 2rem;display:flex;align-items:cente
       </div>
 
       <div class="pdf-matrix-title">Monthly P&amp;I Payment Matrix &nbsp;(★ = your scenario)</div>
-      <table class="pdf-matrix">
+      <div class="pdf-matrix-wrap"><table class="pdf-matrix">
         <thead><tr>
           <th style="text-align:left;padding-left:8px">Price / Rate</th>
           <th>6.375%</th><th>6.500%</th><th style="color:#9eecd1">6.625% ★</th><th>6.750%</th><th>6.875%</th>
@@ -436,7 +501,7 @@ footer{background:var(--navy);padding:1.5rem 2rem;display:flex;align-items:cente
           <tr><td style="background:var(--bg);text-align:left;padding-left:8px;font-weight:600;font-size:.72rem">$775k</td><td class="pm-red">$3,868</td><td class="pm-red">$3,919</td><td class="pm-red">$3,970</td><td class="pm-red">$4,021</td><td class="pm-red">$4,073</td></tr>
           <tr><td style="background:var(--bg);text-align:left;padding-left:8px;font-weight:600;font-size:.72rem">$800k</td><td class="pm-red">$3,993</td><td class="pm-red">$4,045</td><td class="pm-red">$4,098</td><td class="pm-red">$4,151</td><td class="pm-red">$4,204</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="pdf-rates">
         <div class="pdf-rates-header">
@@ -451,7 +516,7 @@ footer{background:var(--navy);padding:1.5rem 2rem;display:flex;align-items:cente
         <div class="pdf-rate-note">Rates subject to credit approval. APR may differ. Contact Sarah for a personalized quote.</div>
       </div>
 
-      <div class="pdf-sens">
+      <div class="pdf-sens" style="overflow-x:auto;-webkit-overflow-scrolling:touch">
         <div class="pdf-sens-title">What moves your payment?</div>
         <table class="pdf-sens-table">
           <thead><tr><th>Scenario</th><th>Monthly P&I</th><th>vs. Your Scenario</th></tr></thead>
