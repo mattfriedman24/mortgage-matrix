@@ -1315,7 +1315,7 @@ function getAdditionals(price,loan){
   if(document.getElementById('chk-hoa').checked)t+=pf(document.getElementById('hoa-mo').value)||0;
   return t;
 }
-function cellClass(ri,ci){if(ri===2&&ci===2)return 'c-center';const d=(ri-2)+(ci-2);if(d<=-3)return 'c-low';if(d<0)return 'c-nlow';if(d>=3)return 'c-high';return 'c-nhigh';}
+function cellClass(pmt,base,ri,ci){if(ri===2&&ci===2)return 'c-center';const diff=pmt-base;if(diff<=-base*0.04)return 'c-low';if(diff<0)return 'c-nlow';if(diff>=base*0.04)return 'c-high';return 'c-nhigh';}
 
 // ── UI TOGGLES ────────────────────────────────────────────────────────────
 function setDpMode(m){dpMode=m;document.getElementById('btn-dollar').classList.toggle('active',m==='dollar');document.getElementById('btn-pct').classList.toggle('active',m==='pct');document.getElementById('dp-dollar-wrap').style.display=m==='dollar'?'':'none';document.getElementById('dp-pct-wrap').style.display=m==='pct'?'':'none';updateAll();}
@@ -1757,7 +1757,7 @@ function updateAll(){
   rates.forEach((r,ci)=>hHTML+=`<th class="${ci===2?'cc':''}" style="${ci===2?'font-size:.84rem;font-weight:700;color:#9eecd1;':'font-size:.78rem;font-weight:600;'}">${r.toFixed(3)}%${ci===2?' ★':''}</th>`);
   document.getElementById('thead').innerHTML=hHTML+'</tr>';
   let bHTML='';
-  prices.forEach((price,ri)=>{const rd=getDownDollars(price),rl=Math.max(0,price-rd);bHTML+=`<tr><td class="rh" style="${ri===2?'font-weight:800;color:var(--ink);font-size:.78rem;font-family:\'Barlow Condensed\',sans-serif;text-transform:uppercase;':''}"> ${ri===2?fmtK(price)+' ★':fmtK(price)}</td>`;rates.forEach((r,ci)=>{const pi=mPI(rl,r,yr),add=activeTab==='allin'?getAdditionals(price,rl):0;bHTML+=`<td class="${cellClass(ri,ci)}">${fmt(pi+add)}</td>`;});bHTML+='</tr>';});
+  prices.forEach((price,ri)=>{const rd=getDownDollars(price),rl=Math.max(0,price-rd);bHTML+=`<tr><td class="rh" style="${ri===2?'font-weight:800;color:var(--ink);font-size:.78rem;font-family:\'Barlow Condensed\',sans-serif;text-transform:uppercase;':''}"> ${ri===2?fmtK(price)+' ★':fmtK(price)}</td>`;const _cp=mPI(bl,br,yr)+(activeTab==='allin'?getAdditionals(bp,bl):0);rates.forEach((r,ci)=>{const pi=mPI(rl,r,yr),add=activeTab==='allin'?getAdditionals(price,rl):0;const _pmt=pi+add;bHTML+=`<td class="${cellClass(_pmt,_cp,ri,ci)}">${fmt(_pmt)}</td>`;});bHTML+='</tr>';});
   document.getElementById('tbody').innerHTML=bHTML;
 
   updateSensitivity(bl,br,yr);
